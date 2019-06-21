@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Create an account</title>
+
+    <link th:href="@{resource/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{resource/theme/bootstrap/css/common.css}" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="container">
+
+    <form method="post" th:action="@{/registration}" th:object="${userForm}" class="form-signin">
+        <h2 class="form-signin-heading">Create your account</h2>
+            <div th:class="'form-group' + ${#fields.hasErrors() ? ' has-error' : ''}">
+                <input type="text" th:field="*{username}" class="form-control" placeholder="Username"/>
+                <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+            </div>
+
+            <div th:class="'form-group' + ${#fields.hasErrors() ? ' has-error' : ''}">
+                <input type="password" th:field="*{password}" class="form-control" placeholder="Password"/>
+                <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+            </div>
+
+            <div th:class="'form-group' + ${#fields.hasErrors() ? ' has-error' : ''}">
+                <input type="password" th:field="*{passwordConfirm}" class="form-control"
+                            placeholder="Confirm your password"/>
+                <p th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}"></p>
+            </div>
+        <input type="radio" th:field="*{role}" th:value="'USER'" th:text="'USER'"/>
+        <br/>
+        <input type="radio" th:field="*{role}" th:value="'USER_VIP'" th:text="'USER_VIP'">
+        <button class="form-group btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+    </form>
+
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script th:src="@{/resource/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

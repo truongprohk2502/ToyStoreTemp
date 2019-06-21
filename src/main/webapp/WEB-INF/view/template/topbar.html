@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -13,13 +13,24 @@
                     <input type="text" name="word" id="search" class="input-block-level search-query" Placeholder="Input something need to be find">
                 </form>
             </div>
-            <div class="span8">
+            <div class="span8" sec:authorize="!isAuthenticated()">
                 <div class="account pull-right">
                     <ul class="user-menu">
-                        <li><a href="#">My Account</a></li>
+                        <li><a th:href="@{/my-account}">My Account</a></li>
                         <li><a href="cart.html">Your Cart</a></li>
                         <li><a href="checkout.html">Checkout</a></li>
-                        <li><a href="register.html">Login</a></li>
+                        <li><a th:href="@{/login}">Login</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="span8" sec:authorize="isAuthenticated()">
+                <div class="account pull-right">
+                    <ul class="user-menu">
+                        <li th:text="${'welcome ' + user}"></li>
+                        <li><a th:href="@{/my-account}">My Account</a></li>
+                        <li><a href="cart.html">Your Cart</a></li>
+                        <li><a href="checkout.html">Checkout</a></li>
+                        <li><a th:href="@{/logout}">Logout</a></li>
                     </ul>
                 </div>
             </div>
