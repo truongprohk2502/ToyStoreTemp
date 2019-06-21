@@ -198,7 +198,6 @@ public class ToyController {
             } else {
                 message = "Search result for price range from " + price1 + " to " + price2 + ": " + toys.getTotalElements() + " results";
             }
-        System.out.println(message);
         modelAndView.addObject("message", message);
         modelAndView.addObject("toys", toys);
         modelAndView.addObject("word", word);
