@@ -186,23 +186,43 @@ public class ToyController {
         String message = "";
         if (toys.getTotalElements() == 0) {
             if (!"".equals(price1) && !"".equals(price2)) {
-                message = "No results for price range from " + price1 + " to " + price2;
-                System.out.println(word);
+                message = "No results for price range from $" + price1 + " to " + price2;
             }
             if (!"".equals(price1) && "".equals(price2)) {
-                message = "No results for price greater than " + price1;
+                message = "No results for price greater than $" + price1;
             }
             if ("".equals(price1) && !"".equals(price2)) {
-                message = "No results for price less than " + price2;
+                message = "No results for price less than $" + price2;
             }
-            } else {
-                message = "Search result for price range from " + price1 + " to " + price2 + ": " + toys.getTotalElements() + " results";
+        } else {
+            if (!"".equals(price1) && !"".equals(price2)) {
+                message = "Search result for price range from $" + price1 + " to $" + price2 + ": " + toys.getTotalElements() + " results";
             }
+            if (!"".equals(price1) && "".equals(price2)) {
+                message = "Search result for price greater than $" + price1 + ": " + toys.getTotalElements() + " results";
+            }
+            if ("".equals(price1) && !"".equals(price2)) {
+                message = "Search result for price less than $" + price2 + ": " + toys.getTotalElements() + " results";
+            }
+        }
         modelAndView.addObject("message", message);
         modelAndView.addObject("toys", toys);
         modelAndView.addObject("word", word);
         modelAndView.addObject("sorted", "none");
         modelAndView.addObject("manufactures", brandService.findRandomBrands(4L));
+        return modelAndView;
+    }
+
+    @GetMapping("/contact")
+    public ModelAndView contact() {
+        ModelAndView modelAndView = new ModelAndView("contact");
+        return modelAndView;
+    }
+
+    @GetMapping("/login")
+    public ModelAndView login() {
+        ModelAndView modelAndView = new ModelAndView("login");
+        modelAndView.addObject("account", new Account());
         return modelAndView;
     }
 }

@@ -73,6 +73,11 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter implements
         return new AdSlideServiceImpl();
     }
 
+    @Bean
+    public AccountService accountService() {
+        return new AccountServiceImpl();
+    }
+
     // Thymeleaf Configuration
     @Bean
     public SpringResourceTemplateResolver templateResolver(){

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -16,10 +16,14 @@
             <div class="span8">
                 <div class="account pull-right">
                     <ul class="user-menu">
-                        <li><a href="#">My Account</a></li>
-                        <li><a href="cart.html">Your Cart</a></li>
-                        <li><a href="checkout.html">Checkout</a></li>
-                        <li><a href="register.html">Login</a></li>
+                        <th:block sec:authorize="isAuthenticated()">
+                            <li><a href="#">My Account</a></li>
+                            <li><a href="cart.html">Your Cart</a></li>
+                            <li><a href="/logout">Checkout</a></li>
+                        </th:block>
+                        <th:block sec:authorize="isAnonymous()">
+                            <li><a href="/login">Login</a></li>
+                        </th:block>
                     </ul>
                 </div>
             </div>
