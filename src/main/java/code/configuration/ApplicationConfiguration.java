@@ -1,20 +1,28 @@
 package code.configuration;
 
+import code.formatter.DateSqlFormatter;
 import code.service.*;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -33,11 +41,11 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
+@ComponentScan("code")
 @EnableWebMvc
 @EnableTransactionManagement
 @EnableSpringDataWebSupport
 @EnableJpaRepositories("code.repository")
-@ComponentScan("code")
 public class ApplicationConfiguration extends WebMvcConfigurerAdapter implements ApplicationContextAware {
 
     private ApplicationContext applicationContext;
@@ -78,6 +86,29 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter implements
         return new AccountServiceImpl();
     }
 
+    @Bean
+    public OrderedService orderedService() {
+        return new OrderedServiceImpl();
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return new UserDetailsServiceImpl();
+    }
+
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(userDetailsService());
+        authenticationProvider.setPasswordEncoder(bCryptPasswordEncoder());
+        return authenticationProvider;
+    }
+
     // Thymeleaf Configuration
     @Bean
     public SpringResourceTemplateResolver templateResolver(){
@@ -105,6 +136,7 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter implements
         viewResolver.setCharacterEncoding("UTF-8");
         return viewResolver;
     }
+
 
     //JPA configuration
     @Bean
@@ -149,8 +181,23 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter implements
         return properties;
     }
 
+    // Validation
+    @Bean
+    public MessageSource messageSource() {
+        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+        messageSource.setBasenames("ValidationMessages");
+        messageSource.setDefaultEncoding("UTF-8");
+        return messageSource;
+    }
+
     // Resource Files
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resource/**").addResourceLocations("/resource/theme/");
+    }
+
+    // Formatter
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addFormatter(new DateSqlFormatter());
     }
 }

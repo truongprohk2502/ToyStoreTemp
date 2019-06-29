@@ -824,7 +824,7 @@ section.our_client .row{
 	color: black;
 	border: 2px solid #4CAF50;
 	border-radius: 10px;
-	font-size: 10px;
+	font-size: 14px;
 	padding-left: 10px;
 	padding-right: 10px;
 	-webkit-transition-duration: 0.4s; /* Safari */
@@ -835,4 +835,32 @@ section.our_client .row{
 .pricesubmit:hover {
 	background-color: #4CAF50;
 	color: white;
+}
+
+.remove {
+	width: 7%;
+}
+
+.image {
+	width: 40%;
+}
+
+.name {
+	width: 20%;
+}
+
+.quantity {
+	width: 9%;
+}
+
+.qtyinstock {
+	width: 8%;
+}
+
+.unitprice {
+	width: 8%;
+}
+
+.total {
+	width: 8%;
 }

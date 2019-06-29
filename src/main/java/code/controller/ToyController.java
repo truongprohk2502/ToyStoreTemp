@@ -2,11 +2,11 @@ package code.controller;
 
 import code.model.*;
 import code.service.*;
+import code.session.OrderSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@SessionAttributes("cart")
 public class ToyController {
 
     @Autowired
@@ -58,6 +59,11 @@ public class ToyController {
                 }
             }
         }
+    }
+
+    @ModelAttribute("cart")
+    public OrderSession orderSession() {
+        return new OrderSession();
     }
 
     @ModelAttribute("categoryHtml")
@@ -216,13 +222,6 @@ public class ToyController {
     @GetMapping("/contact")
     public ModelAndView contact() {
         ModelAndView modelAndView = new ModelAndView("contact");
-        return modelAndView;
-    }
-
-    @GetMapping("/login")
-    public ModelAndView login() {
-        ModelAndView modelAndView = new ModelAndView("login");
-        modelAndView.addObject("account", new Account());
         return modelAndView;
     }
 }

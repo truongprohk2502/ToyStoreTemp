@@ -2,6 +2,8 @@ package code.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "account")
@@ -11,34 +13,31 @@ public class Account {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
-    @NotEmpty
     private String username;
 
-    @NotEmpty
     private String password;
 
-    @NotEmpty
-    private String firstName;
+    @Transient
+    private String confirmPassword;
 
-    @NotEmpty
-    private String lastName;
+    private String name;
 
-    @NotEmpty
     private String phone;
 
-    @NotEmpty
     private String address;
 
-    private Long age;
+    private Date dob;
 
-    @NotEmpty
+    private String gender;
+
     private String email;
 
-    @NotEmpty
     private String role;
 
-    public Account() {
+    @OneToMany(targetEntity = Ordered.class)
+    private List<Ordered> orders;
 
+    public Account() {
     }
 
     public Long getId() {
@@ -65,20 +64,36 @@ public class Account {
         this.password = password;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getConfirmPassword() {
+        return confirmPassword;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getName() {
+        return name;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Date getDob() {
+        return dob;
+    }
+
+    public void setDob(Date dob) {
+        this.dob = dob;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getPhone() {
@@ -97,14 +112,6 @@ public class Account {
         this.address = address;
     }
 
-    public Long getAge() {
-        return age;
-    }
-
-    public void setAge(Long age) {
-        this.age = age;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -119,5 +126,13 @@ public class Account {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public List<Ordered> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Ordered> orders) {
+        this.orders = orders;
     }
 }

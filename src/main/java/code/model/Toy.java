@@ -53,6 +53,9 @@ public class Toy {
     @OneToMany(targetEntity = Image.class)
     private List<Image> images;
 
+    @OneToMany(targetEntity = Ordered.class)
+    private List<Ordered> orders;
+
     public Toy() {}
 
     public Long getId() {
@@ -165,5 +168,13 @@ public class Toy {
 
     public void setImages(List<Image> images) {
         this.images = images;
+    }
+
+    public List<Ordered> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Ordered> orders) {
+        this.orders = orders;
     }
 }

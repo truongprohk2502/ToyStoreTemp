@@ -17,12 +17,13 @@
                 <div class="account pull-right">
                     <ul class="user-menu">
                         <th:block sec:authorize="isAuthenticated()">
-                            <li><a href="#">My Account</a></li>
-                            <li><a href="cart.html">Your Cart</a></li>
-                            <li><a href="/logout">Checkout</a></li>
+                            <li><a href="/cart" th:text="'My Cart(' + ${cart.quantity} + ')'"></a></li>
+                            <li><a href="/profile">My Account</a></li>
+                            <li><a href="/logout">Logout</a></li>
                         </th:block>
                         <th:block sec:authorize="isAnonymous()">
-                            <li><a href="/login">Login</a></li>
+                            <li><a href="/cart" th:text="'My Cart(' + ${cart.quantity} + ')'"></a></li>
+                            <li><a href="/login-form">Login</a></li>
                         </th:block>
                     </ul>
                 </div>

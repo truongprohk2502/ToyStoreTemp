@@ -36,6 +36,7 @@
     <th:block th:replace="/template/navigation :: content"></th:block>
 
     <section class="header_text sub">
+        <img class="pageBanner" th:src="@{/resource/themes/images/pageBanner.png}" alt="New products" >
         <h4><span th:text="${toy.name}"></span></h4>
     </section>
 
@@ -60,15 +61,17 @@
                             <strong>Manufacturing Date:</strong> <span th:text="${toy.manufacturingDate}"></span><br>
                             <strong>Nation:</strong> <span th:text="${toy.brand.nation}"></span><br>
                             <strong>Availability:</strong> <span th:if="${toy.quantityInStock == 0}">Out Of Stock</span><span th:if="${toy.quantityInStock != 0}">Stocking</span><br>
+                            <strong>Quantity:</strong> <span th:text="${toy.quantityInStock}"></span><br>
                         </address>
                         <h4><strong th:text="'Price: $' + ${toy.price}"></strong></h4>
                     </div>
                     <div class="span5">
-                        <form class="form-inline">
+                        <form class="form-inline" th:action="@{/add-to-cart/__${toy.id}__}" onsubmit="return cartValidate()" method="get">
                             <p>&nbsp;</p>
                             <label>Qty:</label>
-                            <input type="text" class="span1" placeholder="1">
-                            <button class="btn btn-inverse" type="submit">Add to cart</button>
+                            <input type="text" name="qty" class="span1">
+                            <input type="hidden" name="qtyInStock" th:value="${toy.quantityInStock}">
+                            <input class="btn btn-inverse" type="submit" value="Add to cart">
                         </form>
                     </div>
                 </div>
