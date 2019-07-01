@@ -19,7 +19,7 @@ public class Ordered {
     @NotNull
     private Date orderDate;
 
-    @NotEmpty
+    @NotNull
     private Long quantity;
 
     @NotEmpty
@@ -92,16 +92,16 @@ public class Ordered {
         this.account = account;
     }
 
-    @Override
-    public String toString() {
-        return "Ordered{" +
-                "id=" + id +
-                ", removeId=" + removeId +
-                ", orderDate=" + orderDate +
-                ", quantity=" + quantity +
-                ", status='" + status + '\'' +
-                ", toy=" + toy.getName() +
-                ", account=" + account.getUsername() +
-                '}';
-    }
+//    @Override
+////    public String toString() {
+////        return "Ordered{" +
+////                "id=" + id +
+////                ", removeId=" + removeId +
+////                ", orderDate=" + orderDate +
+////                ", quantity=" + quantity +
+////                ", status='" + status + '\'' +
+////                ", toy=" + toy.getName() +
+////                ", account=" + account.getUsername() +
+////                '}';
+////    }
 }

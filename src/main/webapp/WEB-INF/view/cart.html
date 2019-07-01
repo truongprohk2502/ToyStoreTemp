@@ -49,7 +49,7 @@
                 <form id="form1" action="/checkout" onsubmit="return validateCheckout()" method="post"></form>
                 <form id="form2" action="/remove" onsubmit="return checkboxValidate()" method="post"></form>
                 <form id="form3" action="/home" method="get"></form>
-                <th:block th:if="${cart.setRemoveId()}"></th:block>
+                <th:block th:if="${cart.setRemoveId()}"/>
                 <table class="table table-striped">
                     <thead>
                     <tr>

@@ -48,7 +48,9 @@ public class OrderController {
         order.setOrderDate(date);
         order.setQuantity(Long.parseLong(qty));
         order.setToy(toyService.findById(id));
-        order.setAccount(accountService.findAccountByUsername(principal.getName()));
+        if (principal != null){
+            order.setAccount(accountService.findAccountByUsername(principal.getName()));
+        }
         orderSession.add(order);
         return modelAndView;
     }
@@ -69,11 +71,14 @@ public class OrderController {
             return modelAndView;
         }
         int i = 0;
+        Account account = accountService.findAccountByUsername(principal.getName());
+
         for (Ordered order : orderSession.getOrders()) {
             order.setQuantity(Long.parseLong(cQty[i]));
             i++;
+            order.setAccount(account);
         }
-        Account account = accountService.findAccountByUsername(principal.getName());
+
         ModelAndView payment = new ModelAndView("payment");
         payment.addObject("account", account);
         return payment;
