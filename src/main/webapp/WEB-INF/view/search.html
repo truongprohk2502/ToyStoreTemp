@@ -103,6 +103,19 @@
                         </th:block>
                     </ul>
                 </div>
+                <div class="block">
+                    <h4 class="title"><strong>Best</strong> Seller</h4>
+                    <ul class="small-product">
+                        <th:block th:each="best : ${bestsellers}">
+                            <li>
+                                <a th:href="@{/detail/__${best.toy.id}__}">
+                                    <img th:src="${best.toy.image}" alt="">
+                                </a>
+                                <a th:href="@{/detail/__${best.toy.id}__}" th:text="${best.toy.name}"></a>
+                            </li>
+                        </th:block>
+                    </ul>
+                </div>
             </div>
 
     </section>

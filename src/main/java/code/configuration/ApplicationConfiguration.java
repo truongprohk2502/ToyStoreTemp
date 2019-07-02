@@ -92,6 +92,11 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter implements
     }
 
     @Bean
+    public RatingService ratingService() {
+        return new RatingServiceImpl();
+    }
+
+    @Bean
     public UserDetailsService userDetailsService() {
         return new UserDetailsServiceImpl();
     }

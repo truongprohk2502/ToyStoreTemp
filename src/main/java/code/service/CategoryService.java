@@ -13,4 +13,6 @@ public interface CategoryService {
     List<Category> findAllByParentIdContaining(String index);
 
     String findCategoryName(Long id);
+
+    List<Category> findRandomCategories(Long number);
 }

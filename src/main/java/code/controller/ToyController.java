@@ -3,6 +3,7 @@ package code.controller;
 import code.model.*;
 import code.service.*;
 import code.session.OrderSession;
+import org.joda.time.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,6 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +35,16 @@ public class ToyController {
     private ImageService imageService;
 
     @Autowired
+    private RatingService ratingService;
+
+    @Autowired
     private AdSlideService adSlideService;
+
+    @Autowired
+    private OrderedService orderedService;
+
+    @Autowired
+    private AccountService accountService;
 
     private String str;
     private List<Long> cat;
@@ -106,6 +119,9 @@ public class ToyController {
         if (toys.getTotalElements() == 0) {
             modelAndView.addObject("message", "No product has been found");
         }
+        modelAndView.addObject("manufactures", brandService.findRandomBrands(4L));
+        modelAndView.addObject("subcats", categoryService.findRandomCategories(6L));
+        modelAndView.addObject("bestsellers", orderedService.findBestSeller());
         return modelAndView;
     }
 
@@ -128,11 +144,14 @@ public class ToyController {
         if (toys.getTotalElements() == 0) {
             modelAndView.addObject("message", "No product has been found");
         }
+        modelAndView.addObject("manufactures", brandService.findRandomBrands(4L));
+        modelAndView.addObject("subcats", categoryService.findRandomCategories(6L));
+        modelAndView.addObject("bestsellers", orderedService.findBestSeller());
         return modelAndView;
     }
 
     @GetMapping("/detail/{id}")
-    public ModelAndView detail(@PathVariable Long id) {
+    public ModelAndView detail(@PathVariable Long id, Principal principal) {
         ModelAndView modelAndView = new ModelAndView("detail");
         Toy toy = toyService.findById(id);
         modelAndView.addObject("toy", toy);
@@ -143,6 +162,20 @@ public class ToyController {
             informations.add(new Information(info[0], info[1]));
         }
         modelAndView.addObject("informations", informations);
+        modelAndView.addObject("manufactures", brandService.findRandomBrands(4L));
+        modelAndView.addObject("subcats", categoryService.findRandomCategories(6L));
+        modelAndView.addObject("bestsellers", orderedService.findBestSeller());
+        List<Toy> relatedToys = toyService.findRelatedToys();
+        modelAndView.addObject("relatedToys1", relatedToys.subList(0, 3));
+        modelAndView.addObject("relatedToys2", relatedToys.subList(3, relatedToys.size()));
+        if (principal != null) {
+            if (ratingService.findAllByAccount_UsernameAndToy_Id(principal.getName(), id) != null) {
+                modelAndView.addObject("star", ratingService.findAllByAccount_UsernameAndToy_Id(principal.getName(), id).get(0).getRatingStar());
+            }
+            modelAndView.addObject("username", principal.getName());
+        } else {
+            modelAndView.addObject("star", 0);
+        }
         return modelAndView;
     }
 
@@ -162,6 +195,7 @@ public class ToyController {
         modelAndView.addObject("word", word);
         modelAndView.addObject("sorted", sort);
         modelAndView.addObject("manufactures", brandService.findRandomBrands(4L));
+        modelAndView.addObject("bestsellers", orderedService.findBestSeller());
         return modelAndView;
     }
 
@@ -181,6 +215,7 @@ public class ToyController {
         modelAndView.addObject("word", word);
         modelAndView.addObject("sorted", "none");
         modelAndView.addObject("manufactures", brandService.findRandomBrands(4L));
+        modelAndView.addObject("bestsellers", orderedService.findBestSeller());
         return modelAndView;
     }
 

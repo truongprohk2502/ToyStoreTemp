@@ -2,6 +2,7 @@ package code.controller;
 
 import code.model.Account;
 import code.model.Ordered;
+import code.model.Toy;
 import code.service.AccountService;
 import code.service.OrderedService;
 import code.session.OrderSession;
@@ -41,14 +42,14 @@ public class OrderController {
     }
 
     @GetMapping("/add-to-cart/{id}")
-    public ModelAndView addToCart(@PathVariable Long id, @RequestParam("qty") String qty, @ModelAttribute("cart") OrderSession orderSession, Principal principal) {
+    public ModelAndView addToCart(@PathVariable Long id, @RequestParam("qty") String qty, @ModelAttribute("cart") OrderSession orderSession) {
         ModelAndView modelAndView = new ModelAndView("cart");
         Ordered order = new Ordered();
         Date date = new Date(System.currentTimeMillis());
         order.setOrderDate(date);
         order.setQuantity(Long.parseLong(qty));
         order.setToy(toyService.findById(id));
-        order.setAccount(accountService.findAccountByUsername(principal.getName()));
+        //order.setAccount(accountService.findAccountByUsername(principal.getName()));
         orderSession.add(order);
         return modelAndView;
     }
@@ -69,11 +70,12 @@ public class OrderController {
             return modelAndView;
         }
         int i = 0;
+        Account account = accountService.findAccountByUsername(principal.getName());
         for (Ordered order : orderSession.getOrders()) {
+            order.setAccount(account);
             order.setQuantity(Long.parseLong(cQty[i]));
             i++;
         }
-        Account account = accountService.findAccountByUsername(principal.getName());
         ModelAndView payment = new ModelAndView("payment");
         payment.addObject("account", account);
         return payment;
@@ -92,6 +94,8 @@ public class OrderController {
         modelAndView.addObject("message", message);
         for (Ordered order : orderSession.getOrders()) {
             order.setStatus("DELIVERING");
+            Toy toy = toyService.findById(order.getToy().getId());
+            toyService.updateQuantityInStock(toy.getId(), toy.getQuantityInStock() - order.getQuantity());
             orderedService.save(order);
         }
         orderSession.setOrders(new ArrayList<>());

@@ -16,13 +16,10 @@ public class Ordered {
     @Transient
     private Long removeId;
 
-    @NotNull
     private Date orderDate;
 
-    @NotEmpty
     private Long quantity;
 
-    @NotEmpty
     private String status;
 
     @ManyToOne
@@ -90,18 +87,5 @@ public class Ordered {
 
     public void setAccount(Account account) {
         this.account = account;
-    }
-
-    @Override
-    public String toString() {
-        return "Ordered{" +
-                "id=" + id +
-                ", removeId=" + removeId +
-                ", orderDate=" + orderDate +
-                ", quantity=" + quantity +
-                ", status='" + status + '\'' +
-                ", toy=" + toy.getName() +
-                ", account=" + account.getUsername() +
-                '}';
     }
 }

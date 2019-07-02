@@ -37,6 +37,9 @@ public class Account {
     @OneToMany(targetEntity = Ordered.class)
     private List<Ordered> orders;
 
+    @OneToMany(targetEntity = Rating.class)
+    private List<Ordered> ratings;
+
     public Account() {
     }
 
@@ -134,5 +137,13 @@ public class Account {
 
     public void setOrders(List<Ordered> orders) {
         this.orders = orders;
+    }
+
+    public List<Ordered> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<Ordered> ratings) {
+        this.ratings = ratings;
     }
 }

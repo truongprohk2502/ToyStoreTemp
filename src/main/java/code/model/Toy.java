@@ -14,28 +14,20 @@ public class Toy {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
-    @NotEmpty
     private String name;
 
-    @NotEmpty
     private String image;
 
-    @NotEmpty
     private Long price;
 
-    @NotEmpty
     private Long quantityInStock;
 
-    @NotEmpty
     private Boolean enableSelling;
 
-    @NotNull
     private Date manufacturingDate;
 
-    @NotEmpty
     private String description;
 
-    @NotEmpty
     private String information;
 
     private Long oldPrice;
@@ -55,6 +47,9 @@ public class Toy {
 
     @OneToMany(targetEntity = Ordered.class)
     private List<Ordered> orders;
+
+    @OneToMany(targetEntity = Rating.class)
+    private List<Rating> ratings;
 
     public Toy() {}
 
@@ -176,5 +171,13 @@ public class Toy {
 
     public void setOrders(List<Ordered> orders) {
         this.orders = orders;
+    }
+
+    public List<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
     }
 }

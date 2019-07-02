@@ -1,6 +1,10 @@
 package code.controller;
 
 import code.model.Account;
+import code.model.Rating;
+import code.model.Star;
+import code.service.RatingService;
+import code.service.ToyService;
 import code.validation.AccountValidator;
 import code.session.OrderSession;
 import code.model.Password;
@@ -15,6 +19,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @SessionAttributes("cart")
@@ -22,6 +29,9 @@ public class AccountController {
 
     @Autowired
     private AccountService accountService;
+
+    @Autowired
+    private RatingService ratingService;
 
     @Autowired
     private AccountValidator accountValidator;
@@ -114,6 +124,55 @@ public class AccountController {
         accountService.save(account);
         return new ModelAndView("redirect: login-form");
 
+    }
+
+    @GetMapping("/rating/{id}")
+    public ModelAndView rating(@PathVariable Long id) {
+        ModelAndView modelAndView = new ModelAndView("iframe/rating");
+        List<Rating> ratings = ratingService.findAllByToyId(id);
+        Long ratingSize = 0L;
+        for (Rating rating : ratings) {
+            if (rating.getRatingStar() != 0) {
+                ratingSize++;
+            }
+        }
+        List<Star> stars = new ArrayList<>();
+        if (!ratings.isEmpty()) {
+            Long average = 0L;
+            String color;
+            Long avgStar;
+            for (Long i = 5L; i > 0; i --) {
+                Long temp = 0L;
+                for (Rating rating : ratings) {
+                    if (rating.getRatingStar() == i) {
+                        temp++;
+                    }
+                }
+                avgStar = 100 * temp / ratingSize;
+                if (avgStar <= 20) {
+                    color = "danger";
+                } else if (avgStar > 20 && avgStar <= 40) {
+                    color = "warning";
+                } else if (avgStar > 40 && avgStar <= 60) {
+                    color = "info";
+                } else if (avgStar > 60 && avgStar <= 80) {
+                    color = "stripped";
+                } else {
+                    color = "success";
+                }
+                stars.add(new Star(i, avgStar, color));
+                average += i * temp;
+            }
+            modelAndView.addObject("average", (float)Math.round((float) 10 * average / ratingSize) / 10);
+        } else {
+            for (Long i = 5L; i > 0; i --) {
+                stars.add(new Star(i, 0L, ""));
+            }
+            modelAndView.addObject("average", 0);
+        }
+        modelAndView.addObject("total", ratingSize);
+        modelAndView.addObject("stars", stars);
+        return modelAndView;
     }
 
     @GetMapping("/denied")
