@@ -3,7 +3,6 @@ package code.service;
 import code.model.Account;
 import code.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -29,12 +28,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
         Account account = accountRepository.findByUsername(username);
+
         if (account == null) {
             throw new UsernameNotFoundException(username);
         }
+
         Set<GrantedAuthority> authorities = new HashSet<>();
         authorities.add(new SimpleGrantedAuthority(account.getRole()));
+
         return new User(account.getUsername(), bCryptPasswordEncoder.encode(account.getPassword()), authorities);
     }
 }

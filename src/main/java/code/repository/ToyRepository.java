@@ -37,4 +37,5 @@ public interface ToyRepository extends PagingAndSortingRepository<Toy, Long> {
     @Transactional
     @Query("update Toy t set t.quantityInStock = :qty where t.id = :id")
     void updateQuantityInStock(@Param("id") Long id, @Param("qty") Long qty);
+
 }

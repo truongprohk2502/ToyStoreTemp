@@ -15,6 +15,11 @@ public class AccountServiceImpl  implements AccountService {
     }
 
     @Override
+    public Account findAccountById(Long id) {
+        return accountRepository.findOne(id);
+    }
+
+    @Override
     public Account findAccountByUsername(String username) {
         return accountRepository.findByUsername(username);
     }
@@ -36,11 +41,18 @@ public class AccountServiceImpl  implements AccountService {
 
     @Override
     public void update(Account account) {
-        accountRepository.update(account.getName(), account.getDob(), account.getGender(), account.getAddress(), account.getPhone(), account.getId());
+
+        Account temp = accountRepository.findByUsername(account.getUsername());
+        account.setRole(temp.getRole());
+        account.setPassword(temp.getPassword());
+
+        accountRepository.save(account);
+
     }
 
     @Override
     public void updatePassword(Long id, String password) {
         accountRepository.updatePassword(password, id);
     }
+
 }

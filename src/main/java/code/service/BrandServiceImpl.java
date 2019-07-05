@@ -1,15 +1,19 @@
 package code.service;
 
 import code.model.Brand;
+import code.repository.BrandRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
 
 @Transactional
 public class BrandServiceImpl implements BrandService {
+
+    @Autowired
+    private BrandRepository brandRepository;
 
     @PersistenceContext
     private EntityManager em;
@@ -22,8 +26,7 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public String findBrandName(Long id) {
-        TypedQuery<Brand> query = em.createQuery("select b from Brand b where b.id = :id", Brand.class);
-        query.setParameter("id", id);
-        return query.getSingleResult().getName();
+        return brandRepository.findOne(id).getName();
     }
+
 }

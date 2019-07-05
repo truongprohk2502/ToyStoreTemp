@@ -1,7 +1,6 @@
 package code.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "adslide")
@@ -11,7 +10,6 @@ public class AdSlide {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
-    @NotEmpty
     private String link;
 
     private String info;

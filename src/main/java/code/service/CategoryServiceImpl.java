@@ -3,13 +3,11 @@ package code.service;
 import code.model.Category;
 import code.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Transactional
@@ -22,7 +20,7 @@ public class CategoryServiceImpl implements CategoryService {
     private EntityManager em;
 
     @Override
-    public Iterable<Category> findAll() {
+    public List<Category> findAll() {
         return categoryRepository.findAll();
     }
 
@@ -33,9 +31,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public String findCategoryName(Long id) {
-        TypedQuery<Category> query = em.createQuery("select c from Category c where c.id = :id", Category.class);
-        query.setParameter("id", id);
-        return query.getSingleResult().getName();
+        return categoryRepository.findOne(id).getName();
     }
 
     @Override
@@ -43,4 +39,5 @@ public class CategoryServiceImpl implements CategoryService {
         String query = "select * from Category order by rand() limit " + number;
         return em.createNativeQuery(query, Category.class).getResultList();
     }
+
 }

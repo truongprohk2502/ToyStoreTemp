@@ -17,6 +17,8 @@
                 <div class="account pull-right">
                     <ul class="user-menu">
                         <th:block sec:authorize="isAuthenticated()">
+                            <li><a href="/order-history">Order History</a></li>
+                            <li><a href="/favorite">Favorite List</a></li>
                             <li><a href="/cart" th:text="'My Cart(' + ${cart.quantity} + ')'"></a></li>
                             <li><a href="/profile">My Account</a></li>
                             <li><a href="/logout">Logout</a></li>

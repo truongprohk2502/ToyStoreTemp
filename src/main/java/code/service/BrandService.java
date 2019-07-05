@@ -9,4 +9,5 @@ public interface BrandService {
     List<Brand> findRandomBrands(Long number);
 
     String findBrandName(Long id);
+
 }

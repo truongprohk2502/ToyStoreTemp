@@ -1,8 +1,6 @@
 package code.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
 @Entity
@@ -17,6 +15,8 @@ public class Ordered {
     private Long removeId;
 
     private Date orderDate;
+
+    private Date deliveredDate;
 
     private Long quantity;
 
@@ -55,6 +55,14 @@ public class Ordered {
 
     public void setOrderDate(Date orderDate) {
         this.orderDate = orderDate;
+    }
+
+    public Date getDeliveredDate() {
+        return deliveredDate;
+    }
+
+    public void setDeliveredDate(Date deliveredDate) {
+        this.deliveredDate = deliveredDate;
     }
 
     public Long getQuantity() {

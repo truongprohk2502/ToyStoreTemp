@@ -21,7 +21,6 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -96,6 +95,21 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter implements
     @Bean
     public RatingService ratingService() {
         return new RatingServiceImpl();
+    }
+
+    @Bean
+    public ProvinceService provinceService() {
+        return new ProvinceServiceImpl();
+    }
+
+    @Bean
+    public DistrictService districtService() {
+        return new DistrictServiceImpl();
+    }
+
+    @Bean
+    public VillageService villageService() {
+        return new VillageServiceImpl();
     }
 
     @Bean

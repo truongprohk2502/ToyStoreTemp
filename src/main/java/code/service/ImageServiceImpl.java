@@ -1,21 +1,19 @@
 package code.service;
 
 import code.model.Image;
+import code.repository.ImageRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import java.util.List;
 
 public class ImageServiceImpl implements ImageService {
 
-    @PersistenceContext
-    private EntityManager em;
+    @Autowired
+    private ImageRepository imageRepository;
 
     @Override
     public List<Image> findAllByToyId(Long id) {
-        TypedQuery<Image> query = em.createQuery("select i from Image i where i.toy.id = :id", Image.class);
-        query.setParameter("id", id);
-        return query.getResultList();
+        return imageRepository.findAllByToy_Id(id);
     }
+
 }

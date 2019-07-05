@@ -27,4 +27,10 @@ public class OrderedServiceImpl implements OrderedService {
     public List<Ordered> findBestSeller() {
         return em.createNativeQuery("select * from Ordered group by toyId order by count(toyId) desc limit 3", Ordered.class).getResultList();
     }
+
+    @Override
+    public List<Ordered> findAllByAccount_Username(String username) {
+        return orderedRepository.findAllByAccount_Username(username);
+    }
+
 }

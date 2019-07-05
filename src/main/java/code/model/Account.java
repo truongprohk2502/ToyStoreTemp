@@ -1,8 +1,8 @@
 package code.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,9 +22,9 @@ public class Account {
 
     private String name;
 
-    private String phone;
-
     private String address;
+
+    private String phone;
 
     private Date dob;
 
@@ -34,13 +34,57 @@ public class Account {
 
     private String role;
 
+    @ManyToOne
+    @JoinColumn(name = "provinceId")
+    private Province province;
+
+    @ManyToOne
+    @JoinColumn(name = "districtId")
+    private District district;
+
+    @ManyToOne
+    @JoinColumn(name = "villageId")
+    private Village village;
+
     @OneToMany(targetEntity = Ordered.class)
     private List<Ordered> orders;
 
     @OneToMany(targetEntity = Rating.class)
     private List<Ordered> ratings;
 
+    @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+    @JoinTable(
+            name = "account_toy",
+            joinColumns = { @JoinColumn(name = "account_id") },
+            inverseJoinColumns = { @JoinColumn(name = "toy_id") }
+    )
+    private List<Toy> toys = new ArrayList<>();
+
     public Account() {
+    }
+
+    public void addToy(Toy toy) {
+        toys.add(toy);
+    }
+
+    public void removeToy(Long id) {
+        for (Toy toy : toys) {
+            if (toy.getId() == id) {
+                toys.remove(toy);
+                break;
+            }
+        }
+    }
+
+    public boolean containToy(Long id) {
+
+        for (Toy toy : toys) {
+            if (toy.getId() == id) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public Long getId() {
@@ -83,6 +127,14 @@ public class Account {
         this.name = name;
     }
 
+    public String getAddress() {
+        return village + " - " + district + " - " + province;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public Date getDob() {
         return dob;
     }
@@ -107,12 +159,28 @@ public class Account {
         this.phone = phone;
     }
 
-    public String getAddress() {
-        return address;
+    public Province getProvince() {
+        return province;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setProvince(Province province) {
+        this.province = province;
+    }
+
+    public District getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(District district) {
+        this.district = district;
+    }
+
+    public Village getVillage() {
+        return village;
+    }
+
+    public void setVillage(Village village) {
+        this.village = village;
     }
 
     public String getEmail() {
@@ -146,4 +214,13 @@ public class Account {
     public void setRatings(List<Ordered> ratings) {
         this.ratings = ratings;
     }
+
+    public List<Toy> getToys() {
+        return toys;
+    }
+
+    public void setToys(List<Toy> toys) {
+        this.toys = toys;
+    }
+
 }

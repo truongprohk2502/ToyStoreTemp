@@ -3,7 +3,5 @@ package code.repository;
 import code.model.AdSlide;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-import java.util.List;
-
 public interface AdSlideRepository extends PagingAndSortingRepository<AdSlide, Long> {
 }

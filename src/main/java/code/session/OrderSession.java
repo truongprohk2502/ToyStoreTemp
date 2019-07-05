@@ -62,15 +62,20 @@ public class OrderSession {
     }
 
     public Long getTotalPrice() {
+
         Long total = 0L;
+
         for (Ordered order : orders) {
             total += order.getQuantity() * order.getToy().getPrice();
         }
+
         return total;
     }
 
     public Double getVatFee() {
+
         Double price = getTotalPrice() * vat / 100;
+
         return (double) Math.round(price * 10) / 10;
     }
 
@@ -79,14 +84,18 @@ public class OrderSession {
     }
 
     public void setRemoveId() {
+
         Long temp = 0L;
+
         for (Ordered order : orders) {
             order.setRemoveId(temp);
             temp++;
         }
+
     }
 
     public void removeOrder(Long removeId) {
+
        for (Ordered order : orders) {
            if (order.getRemoveId() == removeId) {
                 orders.remove(order);
@@ -94,5 +103,18 @@ public class OrderSession {
                 break;
            }
        }
+
     }
+
+    public boolean containOrdered(Ordered ordered) {
+
+        for (Ordered o : orders) {
+            if (o.getToy().getId() == ordered.getToy().getId()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }
