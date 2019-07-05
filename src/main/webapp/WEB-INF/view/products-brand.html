@@ -40,8 +40,8 @@
 
     <!--Main Content-->
     <section class="main-content">
-        <th:block th:if="${message}">
-            <center class="message" th:text="${message}"></center>
+        <th:block th:if="${content}">
+            <center class="content" th:text="${content}"></center>
         </th:block>
         <div class="row">
             <div class="span9">
@@ -78,80 +78,29 @@
                 <div class="block">
                     <ul class="nav nav-list">
                         <li class="nav-header">SUB CATEGORIES</li>
-                        <li><a href="products-brand.html">Nullam semper elementum</a></li>
-                        <li class="active"><a href="products-brand.html">Phasellus ultricies</a></li>
-                        <li><a href="products-brand.html">Donec laoreet dui</a></li>
-                        <li><a href="products-brand.html">Nullam semper elementum</a></li>
-                        <li><a href="products-brand.html">Phasellus ultricies</a></li>
-                        <li><a href="products-brand.html">Donec laoreet dui</a></li>
+                        <th:block th:each="cat : ${subcats}">
+                            <li><a th:href="@{/products-category/__${cat.id}__}" th:text="${cat.name}"></a></li>
+                        </th:block>
                     </ul>
                     <br/>
                     <ul class="nav nav-list below">
                         <li class="nav-header">MANUFACTURES</li>
-                        <li><a href="products-brand.html">Adidas</a></li>
-                        <li><a href="products-brand.html">Nike</a></li>
-                        <li><a href="products-brand.html">Dunlop</a></li>
-                        <li><a href="products-brand.html">Yamaha</a></li>
+                        <th:block th:each="manufacture : ${manufactures}">
+                            <li><a th:href="@{/products-brand/__${manufacture.id}__}" th:text="${manufacture.name}"></a></li>
+                        </th:block>
                     </ul>
-                </div>
-                <div class="block">
-                    <h4 class="title">
-                        <span class="pull-left"><span class="text">Randomize</span></span>
-                        <span class="pull-right">
-									<a class="left button" href="#myCarousel" data-slide="prev"></a><a class="right button" href="#myCarousel" data-slide="next"></a>
-								</span>
-                    </h4>
-                    <div id="myCarousel" class="carousel slide">
-                        <div class="carousel-inner">
-                            <div class="active item">
-                                <ul class="thumbnails listing-products">
-                                    <li class="span3">
-                                        <div class="product-box">
-                                            <span class="sale_tag"></span>
-                                            <img alt="" src="/resource/themes/images/ladies/1.jpg"><br/>
-                                            <a href="product_detail.html" class="title">Fusce id molestie massa</a><br/>
-                                            <a href="#" class="category">Suspendisse aliquet</a>
-                                            <p class="price">$261</p>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="item">
-                                <ul class="thumbnails listing-products">
-                                    <li class="span3">
-                                        <div class="product-box">
-                                            <img alt="" src="/resource/themes/images/ladies/2.jpg"><br/>
-                                            <a href="product_detail.html" class="title">Tempor sem sodales</a><br/>
-                                            <a href="#" class="category">Urna nec lectus mollis</a>
-                                            <p class="price">$134</p>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div class="block">
                     <h4 class="title"><strong>Best</strong> Seller</h4>
                     <ul class="small-product">
-                        <li>
-                            <a href="#" title="Praesent tempor sem sodales">
-                                <img src="/resource/themes/images/ladies/3.jpg" alt="Praesent tempor sem sodales">
-                            </a>
-                            <a href="#">Praesent tempor sem</a>
-                        </li>
-                        <li>
-                            <a href="#" title="Luctus quam ultrices rutrum">
-                                <img src="/resource/themes/images/ladies/4.jpg" alt="Luctus quam ultrices rutrum">
-                            </a>
-                            <a href="#">Luctus quam ultrices rutrum</a>
-                        </li>
-                        <li>
-                            <a href="#" title="Fusce id molestie massa">
-                                <img src="/resource/themes/images/ladies/5.jpg" alt="Fusce id molestie massa">
-                            </a>
-                            <a href="#">Fusce id molestie massa</a>
-                        </li>
+                        <th:block th:each="best : ${bestsellers}">
+                            <li>
+                                <a th:href="@{/detail/__${best.toy.id}__}">
+                                    <img th:src="${best.toy.image}" alt="">
+                                </a>
+                                <a th:href="@{/detail/__${best.toy.id}__}" th:text="${best.toy.name}"></a>
+                            </li>
+                        </th:block>
                     </ul>
                 </div>
             </div>

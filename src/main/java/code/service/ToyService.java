@@ -10,6 +10,8 @@ public interface ToyService {
 
     List<Toy> findRandomToys();
 
+    List<Toy> findRelatedToys();
+
     Page<Toy> findBrandToys(Long id, Pageable pageable);
 
     Page<Toy> findCategoryToys(List<Long> idArr, Pageable pageable);
@@ -19,5 +21,7 @@ public interface ToyService {
     Page<Toy> findAllByPrice(String word, String price1, String price2, Pageable pageable);
 
     Toy findById(Long id);
+
+    void updateQuantityInStock(Long id, Long qty);
 }
 

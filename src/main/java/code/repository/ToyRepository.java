@@ -3,8 +3,12 @@ package code.repository;
 import code.model.Toy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.query.Param;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 public interface ToyRepository extends PagingAndSortingRepository<Toy, Long> {
@@ -28,4 +32,9 @@ public interface ToyRepository extends PagingAndSortingRepository<Toy, Long> {
     Page<Toy> findAllByNameContainingAndPriceGreaterThanEqual(String word, Long price1, Pageable pageable);
 
     Page<Toy> findAllByNameContainingAndPriceLessThanEqual(String word, Long price2, Pageable pageable);
+
+    @Modifying
+    @Transactional
+    @Query("update Toy t set t.quantityInStock = :qty where t.id = :id")
+    void updateQuantityInStock(@Param("id") Long id, @Param("qty") Long qty);
 }

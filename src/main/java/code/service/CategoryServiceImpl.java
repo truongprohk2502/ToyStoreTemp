@@ -37,4 +37,10 @@ public class CategoryServiceImpl implements CategoryService {
         query.setParameter("id", id);
         return query.getSingleResult().getName();
     }
+
+    @Override
+    public List<Category> findRandomCategories(Long number) {
+        String query = "select * from Category order by rand() limit " + number;
+        return em.createNativeQuery(query, Category.class).getResultList();
+    }
 }

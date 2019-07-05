@@ -4,14 +4,13 @@ import code.model.Brand;
 import code.model.Toy;
 import code.repository.ToyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.domain.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
-import java.util.Iterator;
 import java.util.List;
 
 @Transactional
@@ -26,6 +25,11 @@ public class ToyServiceImpl implements ToyService {
     @Override
     public List<Toy> findRandomToys() {
         return em.createNativeQuery("select * from Toy order by rand() limit 8", Toy.class).getResultList();
+    }
+
+    @Override
+    public List<Toy> findRelatedToys() {
+        return em.createNativeQuery("select * from Toy order by rand() limit 6", Toy.class).getResultList();
     }
 
     @Override
@@ -80,5 +84,10 @@ public class ToyServiceImpl implements ToyService {
     @Override
     public Toy findById(Long id) {
         return toyRepository.findOne(id);
+    }
+
+    @Override
+    public void updateQuantityInStock(Long id, Long qty) {
+        toyRepository.updateQuantityInStock(id, qty);
     }
 }

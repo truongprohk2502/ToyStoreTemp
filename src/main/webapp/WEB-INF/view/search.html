@@ -36,8 +36,8 @@
 
     <!--Main Content-->
     <section class="main-content">
-        <th:block th:if="${message}">
-            <div class="message"><center th:text="${message}"></center></div>
+        <th:block th:if="${content}">
+            <div class="content"><center th:text="${content}"></center></div>
         </th:block>
         <div class="row">
             <div class="span9">
@@ -100,6 +100,19 @@
                         <li class="nav-header">MANUFACTURES</li>
                         <th:block th:each="manufacture : ${manufactures}">
                             <li><a th:href="@{/products-brand/__${manufacture.id}__}" th:text="${manufacture.name}"></a></li>
+                        </th:block>
+                    </ul>
+                </div>
+                <div class="block">
+                    <h4 class="title"><strong>Best</strong> Seller</h4>
+                    <ul class="small-product">
+                        <th:block th:each="best : ${bestsellers}">
+                            <li>
+                                <a th:href="@{/detail/__${best.toy.id}__}">
+                                    <img th:src="${best.toy.image}" alt="">
+                                </a>
+                                <a th:href="@{/detail/__${best.toy.id}__}" th:text="${best.toy.name}"></a>
+                            </li>
                         </th:block>
                     </ul>
                 </div>

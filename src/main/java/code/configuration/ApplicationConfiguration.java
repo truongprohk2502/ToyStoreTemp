@@ -15,6 +15,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -89,6 +91,11 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter implements
     @Bean
     public OrderedService orderedService() {
         return new OrderedServiceImpl();
+    }
+
+    @Bean
+    public RatingService ratingService() {
+        return new RatingServiceImpl();
     }
 
     @Bean
@@ -199,5 +206,24 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter implements
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addFormatter(new DateSqlFormatter());
+    }
+
+    //email
+    @Bean
+    public JavaMailSender getJavaMailSender() {
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setHost("smtp.gmail.com");
+        mailSender.setPort(587);
+
+        mailSender.setUsername("toeic.t35@gmail.com");
+        mailSender.setPassword("toeic12345");
+
+        Properties props = mailSender.getJavaMailProperties();
+        props.put("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.debug", "true");
+
+        return mailSender;
     }
 }
