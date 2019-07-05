@@ -1,8 +1,12 @@
 package code.JSON;
 
-import java.sql.Timestamp;
-
 public class Comment {
+
+    private Long ratingId;
+
+    private Long parentId;
+
+    private Long rootId;
 
     private Long ratingStar;
 
@@ -12,18 +16,44 @@ public class Comment {
 
     private String nameUser;
 
+    private String parentName;
+
     private Long toyId;
 
     private String username;
 
+    private Long replyQty;
+
     public Comment() {
     }
 
-    public Comment(Long ratingStar, String comment, String timeAgo, String nameUser) {
-        this.ratingStar = ratingStar;
-        this.comment = comment;
-        this.timeAgo = timeAgo;
-        this.nameUser = nameUser;
+    public Comment(Long ratingId, Long parentId) {
+        this.ratingId = ratingId;
+        this.parentId = parentId;
+    }
+
+    public Long getRatingId() {
+        return ratingId;
+    }
+
+    public void setRatingId(Long ratingId) {
+        this.ratingId = ratingId;
+    }
+
+    public Long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
+    }
+
+    public Long getRootId() {
+        return rootId;
+    }
+
+    public void setRootId(Long rootId) {
+        this.rootId = rootId;
     }
 
     public Long getRatingStar() {
@@ -58,6 +88,14 @@ public class Comment {
         this.nameUser = nameUser;
     }
 
+    public String getParentName() {
+        return parentName;
+    }
+
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
+    }
+
     public Long getToyId() {
         return toyId;
     }
@@ -72,5 +110,13 @@ public class Comment {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public Long getReplyQty() {
+        return replyQty;
+    }
+
+    public void setReplyQty(Long replyQty) {
+        this.replyQty = replyQty;
     }
 }

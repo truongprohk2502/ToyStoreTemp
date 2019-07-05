@@ -9,4 +9,7 @@ public interface OrderedService {
     void save(Ordered ordered);
 
     List<Ordered> findBestSeller();
+
+    List<Ordered> findAllByAccount_Username(String username);
+
 }

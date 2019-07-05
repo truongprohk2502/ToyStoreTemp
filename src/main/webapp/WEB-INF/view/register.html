@@ -10,6 +10,8 @@
     <meta name="author" content="Colorlib">
     <meta name="keywords" content="Colorlib Templates">
 
+    <link rel="icon" th:href="@{/resource/rating/images/toyshop.png}">
+
     <!-- Title Page-->
     <title>Sign up Form</title>
 
@@ -25,6 +27,7 @@
 
     <!-- Main CSS-->
     <link th:href="@{/resource/clogin/css/main.css}" rel="stylesheet" media="all">
+
 </head>
 
 <body>
@@ -38,31 +41,41 @@
             <div class="card-body">
                 <h2 class="title">Registration Information</h2>
                 <form method="POST" action="/register" th:object="${account}">
+
                     <input type="hidden" th:field="*{id}"/>
+                    <input type="hidden" name="prv" th:value="${prv}"/>
+                    <input type="hidden" name="dst" th:value="${dst}"/>
+                    <input type="hidden" name="vlg" th:value="${vlg}"/>
+
+
                     <div class="input-group">
                         <input class="input--style-3" type="text" placeholder="Username" th:field="*{username}">
                     </div>
                     <div class="input-group" th:if="${#fields.hasErrors('username')}">
                         <span class="error-text" th:errors="*{username}"></span>
                     </div>
+
                     <div class="input-group">
                         <input class="input--style-3" type="password" placeholder="Password" th:field="*{password}">
                     </div>
                     <div class="input-group" th:if="${#fields.hasErrors('password')}">
                         <span class="error-text" th:errors="*{password}"></span>
                     </div>
+
                     <div class="input-group">
                         <input class="input--style-3" type="password" placeholder="Repeat Password" th:field="*{confirmPassword}">
                     </div>
                     <div class="input-group" th:if="${#fields.hasErrors('confirmPassword')}">
                         <span class="error-text" th:errors="*{confirmPassword}"></span>
                     </div>
+
                     <div class="input-group">
                         <input class="input--style-3" type="text" placeholder="Name" th:field="*{name}">
                     </div>
                     <div class="input-group" th:if="${#fields.hasErrors('name')}">
                         <span class="error-text" th:errors="*{name}"></span>
                     </div>
+
                     <div class="input-group">
                         <input class="input--style-3 js-datepicker" type="text" placeholder="Birthdate" th:field="*{dob}">
                         <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
@@ -70,6 +83,7 @@
                     <div class="input-group" th:if="${#fields.hasErrors('dob')}">
                         <span class="error-text" th:errors="*{dob}"></span>
                     </div>
+
                     <div class="input-group">
                         <div class="rs-select2 js-select-simple select--no-search">
                             <select th:field="*{gender}">
@@ -83,24 +97,57 @@
                     <div class="input-group" th:if="${#fields.hasErrors('gender')}">
                         <span class="error-text" th:errors="*{gender}"></span>
                     </div>
+
                     <div class="input-group">
                         <input class="input--style-3" type="email" placeholder="Email" th:field="*{email}">
                     </div>
                     <div class="input-group" th:if="${#fields.hasErrors('email')}">
                         <span class="error-text" th:errors="*{email}"></span>
                     </div>
-                    <div class="input-group">
-                        <input class="input--style-3" type="text" placeholder="Address" th:field="*{address}">
-                    </div>
-                    <div class="input-group" th:if="${#fields.hasErrors('address')}">
-                        <span class="error-text" th:errors="*{address}"></span>
-                    </div>
+
                     <div class="input-group">
                         <input class="input--style-3" type="text" placeholder="Phone" th:field="*{phone}">
                     </div>
                     <div class="input-group" th:if="${#fields.hasErrors('phone')}">
                         <span class="error-text" th:errors="*{phone}"></span>
                     </div>
+
+                    <div class="input-group">
+                        <div class="rs-select2 js-select-simple select--no-search">
+                            <select th:field="*{province}" onchange="chooseProvince(this)">
+                                <option value="">Province</option>
+                            </select>
+                            <div class="select-dropdown"></div>
+                        </div>
+                    </div>
+                    <div class="input-group" th:if="${#fields.hasErrors('province')}">
+                        <span class="error-text" th:errors="*{province}"></span>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="rs-select2 js-select-simple select--no-search">
+                            <select th:field="*{district}" onchange="chooseDistrict(this)">
+                                <option value="">District</option>
+                            </select>
+                            <div class="select-dropdown"></div>
+                        </div>
+                    </div>
+                    <div class="input-group" th:if="${#fields.hasErrors('district')}">
+                        <span class="error-text" th:errors="*{district}"></span>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="rs-select2 js-select-simple select--no-search">
+                            <select th:field="*{village}">
+                                <option value="">Village</option>
+                            </select>
+                            <div class="select-dropdown"></div>
+                        </div>
+                    </div>
+                    <div class="input-group" th:if="${#fields.hasErrors('village')}">
+                        <span class="error-text" th:errors="*{village}"></span>
+                    </div>
+
                     <div class="input-group">
                         <span><a href="/login-form">Have already an account</a></span>
                     </div>
@@ -122,6 +169,7 @@
 
 <!-- Main JS-->
 <script th:src="@{/resource/clogin/js/global.js}"></script>
+<script th:src="@{/resource/clogin/js/address.js}"></script>
 
 </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
 

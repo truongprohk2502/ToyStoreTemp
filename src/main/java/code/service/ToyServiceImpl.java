@@ -8,7 +8,6 @@ import org.springframework.data.domain.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
@@ -46,7 +45,9 @@ public class ToyServiceImpl implements ToyService {
 
     @Override
     public Page<Toy> findAllByName(String name, String sorted, Pageable pageable) {
+
         Page<Toy> toys = null;
+
         switch (sorted) {
             case "none":
                 toys = toyRepository.findAllByNameContaining(name, pageable);
@@ -64,20 +65,25 @@ public class ToyServiceImpl implements ToyService {
                 toys = toyRepository.findAllByNameContainingOrderByPriceAsc(name, pageable);
                 break;
         }
+
         return toys;
     }
 
     @Override
     public Page<Toy> findAllByPrice(String word, String price1, String price2, Pageable pageable) {
+
         if (!"".equals(price1) && !"".equals(price2)) {
             return toyRepository.findAllByNameContainingAndPriceGreaterThanEqualAndPriceLessThanEqual(word, Long.parseLong(price1), Long.parseLong(price2), pageable);
         }
+
         if (!"".equals(price1) && "".equals(price2)) {
             return toyRepository.findAllByNameContainingAndPriceGreaterThanEqual(word, Long.parseLong(price1), pageable);
         }
+
         if ("".equals(price1) && !"".equals(price2)) {
             return toyRepository.findAllByNameContainingAndPriceLessThanEqual(word, Long.parseLong(price2), pageable);
         }
+
         return null;
     }
 
@@ -87,7 +93,13 @@ public class ToyServiceImpl implements ToyService {
     }
 
     @Override
+    public void save(Toy toy) {
+        toyRepository.save(toy);
+    }
+
+    @Override
     public void updateQuantityInStock(Long id, Long qty) {
         toyRepository.updateQuantityInStock(id, qty);
     }
+
 }

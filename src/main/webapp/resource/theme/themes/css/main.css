@@ -838,11 +838,11 @@ section.our_client .row{
 }
 
 .remove {
-	width: 7%;
+	width: 10%;
 }
 
 .image {
-	width: 40%;
+	width: 30%;
 }
 
 .name {
@@ -850,20 +850,42 @@ section.our_client .row{
 }
 
 .quantity {
-	width: 9%;
+	width: 10%;
 }
 
 .qtyinstock {
-	width: 8%;
+	width: 10%;
 }
 
 .unitprice {
-	width: 8%;
+	width: 10%;
 }
 
 .total {
-	width: 8%;
+	width: 10%;
 }
+
+/*favorite*/
+.fremove {
+	width: 15%;
+}
+
+.fimage {
+	width: 30%;
+}
+
+.fname {
+	width: 25%;
+}
+
+.fqtyinstock {
+	width: 15%;
+}
+
+.funitprice {
+	width: 15%;
+}
+
 
 .rating-content {
 	text-align: center;
@@ -873,6 +895,10 @@ section.our_client .row{
 	width: 50%;
 	height: 400px;
 	border: none;
+}
+
+.account-name {
+	margin-top: 10px;
 }
 
 .account-name span {
@@ -898,7 +924,7 @@ section.our_client .row{
 	color: red;
 }
 
-input[type=submit], input[type=button] {
+input[class="input-btn"] {
 	background-color: #4CAF50; /* Green */
 	color: white;
 	border: none;
@@ -914,11 +940,19 @@ input[type=submit], input[type=button] {
 	cursor: pointer;
 }
 
-input[type=submit]:hover, input[type=button]:hover {
+input[class="input-btn"]:hover {
 	background-color: #1e7e34;
 }
 
-input[type=submit]:disabled, input[type=button]:disabled {
+input[class="input-btn"]:disabled {
 	background-color: #a9dba9;
 	cursor: default;
+}
+
+.heart-btn {
+	background: none;
+	border: none;
+	outline: none;
+	padding: 0;
+	margin-left: 10px;
 }

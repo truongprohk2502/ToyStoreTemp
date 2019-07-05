@@ -4,8 +4,6 @@ import code.model.AdSlide;
 import code.repository.AdSlideRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
-
 public class AdSlideServiceImpl implements AdSlideService {
 
     @Autowired
@@ -15,4 +13,5 @@ public class AdSlideServiceImpl implements AdSlideService {
     public Iterable<AdSlide> findAll() {
         return adSlideRepository.findAll();
     }
+
 }

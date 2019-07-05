@@ -17,11 +17,7 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     @Modifying
     @Transactional
-    @Query("update Account a set a.name = :name, a.dob = :dob, a.gender = :gender, a.address = :address, a.phone = :phone where a.id = :id")
-    void update(@Param("name") String name, @Param("dob") Date dob, @Param("gender") String gender, @Param("address") String address, @Param("phone") String phone, @Param("id") Long id);
-
-    @Modifying
-    @Transactional
     @Query("update Account a set a.password = :password where a.id = :id")
     void updatePassword(@Param("password") String password, @Param("id") Long id);
+
 }

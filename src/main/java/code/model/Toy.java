@@ -1,9 +1,8 @@
 package code.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -51,7 +50,14 @@ public class Toy {
     @OneToMany(targetEntity = Rating.class)
     private List<Rating> ratings;
 
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "toys")
+    private List<Account> accounts = new ArrayList<>();
+
     public Toy() {}
+
+    public void addAccount(Account account) {
+        accounts.add(account);
+    }
 
     public Long getId() {
         return id;
@@ -179,5 +185,13 @@ public class Toy {
 
     public void setRatings(List<Rating> ratings) {
         this.ratings = ratings;
+    }
+
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
     }
 }

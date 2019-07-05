@@ -43,7 +43,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers( "/checkout").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/profile", "/comment").hasAnyRole("USER", "ADMIN", "SELLER")
+                .antMatchers( "/order-history", "/ordered").hasRole("USER")
+                .antMatchers("/profile", "/comment", "/favorite").hasAnyRole("USER", "ADMIN", "SELLER")
                 .and()
                     .formLogin().loginPage("/login-form")
                     .defaultSuccessUrl("/home")

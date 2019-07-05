@@ -6,6 +6,8 @@ public interface AccountService {
 
     Iterable<Account> findAll();
 
+    Account findAccountById(Long id);
+
     Account findAccountByUsername(String username);
 
     Account findAccountByEmail(String email);
@@ -17,4 +19,5 @@ public interface AccountService {
     void update(Account account);
 
     void updatePassword(Long id, String password);
+
 }

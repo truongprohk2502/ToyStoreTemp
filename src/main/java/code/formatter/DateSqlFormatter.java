@@ -13,7 +13,9 @@ public class DateSqlFormatter implements Formatter<Date> {
 
     @Override
     public Date parse(String s, Locale locale) throws ParseException {
+
         java.util.Date date = format.parse(s);
+
         return new Date(date.getTime());
     }
 

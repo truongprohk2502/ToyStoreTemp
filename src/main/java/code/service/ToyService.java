@@ -22,6 +22,9 @@ public interface ToyService {
 
     Toy findById(Long id);
 
+    void save(Toy toy);
+
     void updateQuantityInStock(Long id, Long qty);
+
 }
 
