@@ -128,7 +128,7 @@ public class Account {
     }
 
     public String getAddress() {
-        return village + " - " + district + " - " + province;
+        return village.getName() + " - " + district.getName() + " - " + province.getName();
     }
 
     public void setAddress(String address) {

@@ -85,7 +85,9 @@ public class AddressRestController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
+        Long t1 = System.currentTimeMillis();
         List<Village> villages = villageService.findAllByParentId(id);
+        System.out.println(System.currentTimeMillis()-t1);
 
         if (villages.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

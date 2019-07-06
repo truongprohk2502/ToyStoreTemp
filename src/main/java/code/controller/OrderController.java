@@ -90,7 +90,9 @@ public class OrderController {
         }
 
         int i = 0;
+
         Account account = accountService.findAccountByUsername(principal.getName());
+
         for (Ordered order : orderSession.getOrders()) {
             order.setAccount(account);
             order.setQuantity(Long.parseLong(cQty[i]));
