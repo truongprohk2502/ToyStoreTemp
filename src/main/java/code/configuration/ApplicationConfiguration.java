@@ -113,6 +113,12 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter implements
     }
 
     @Bean
+    public SellerService sellerService(){return new SellerServiceImpl();}
+
+    @Bean
+    public BusinessFieldService businessFieldService(){return new BusinessFieldServiceImpl();}
+
+    @Bean
     public UserDetailsService userDetailsService() {
         return new UserDetailsServiceImpl();
     }

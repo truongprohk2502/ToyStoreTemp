@@ -155,5 +155,11 @@ function province() {
         $('#district').html('<option value="0">District</option>');
         $('#village').html('<option value="0">Village</option>');
     }
+}
 
+function denySignUp() {
+    var checkbox = document.getElementsByName("sign-up");
+    checkbox.disabled = true;
+    alert("We can't associate with you since you don't have enough business certificate!")
+    return true;
 }

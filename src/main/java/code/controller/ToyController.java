@@ -98,7 +98,7 @@ public class ToyController {
         return adSlideService.findAll();
     }
 
-    @GetMapping("/home")
+    @GetMapping({"/home","/"})
     public ModelAndView homepage(Pageable pageable) {
 
         ModelAndView modelAndView = new ModelAndView("index");

@@ -30,6 +30,10 @@ public class Ordered {
     @JoinColumn(name = "accountId")
     private Account account;
 
+    @ManyToOne(targetEntity = Seller.class)
+    @JoinColumn(name = "sellerId")
+    private Seller seller;
+
     public Ordered() {
     }
 

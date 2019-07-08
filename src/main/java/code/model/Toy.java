@@ -53,6 +53,10 @@ public class Toy {
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "toys")
     private List<Account> accounts = new ArrayList<>();
 
+    @ManyToOne(targetEntity = Seller.class)
+    @JoinColumn(name = "sellerId")
+    private Seller seller;
+
     public Toy() {}
 
     public void addAccount(Account account) {
