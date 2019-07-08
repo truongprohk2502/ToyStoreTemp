@@ -33,4 +33,14 @@ public class OrderedServiceImpl implements OrderedService {
         return orderedRepository.findAllByAccount_Username(username);
     }
 
+    @Override
+    public List<Ordered> findAllByStatusAndAccountId(String status, Long id) {
+        return orderedRepository.findAllByStatusAndToy_Account_IdOrderByOrderDateDesc(status, id);
+    }
+
+    @Override
+    public List<Ordered> findAllByStatusNotAndAccountId(String status, Long id) {
+        return orderedRepository.findAllByStatusNotAndToy_Account_IdOrderByOrderDateDesc(status, id);
+    }
+
 }

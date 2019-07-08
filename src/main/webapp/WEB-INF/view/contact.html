@@ -64,8 +64,9 @@
                 </div>
             </div>
             <div class="span7">
-                <p>if you have any problem need to be help, please contact us by input your name, email address and message with the form below. Thank you!!!</p>
-                <form method="post" action="#">
+                <p>if you have any problem need to be help, please contact us by input your name, email address and content with the form below. Thank you!!!</p>
+                <p th:text="${message}" th:if="${message != null}"></p>
+                <form method="post" th:action="@{/contact}">
                     <fieldset>
                         <div class="clearfix">
                             <label for="name"><span>Your name:</span></label>
@@ -82,14 +83,14 @@
                         </div>
 
                         <div class="clearfix">
-                            <label for="message"><span>Your message:</span></label>
+                            <label for="content"><span>Your content:</span></label>
                             <div class="input">
-                                <textarea tabindex="3" class="input-xlarge" id="message" name="body" rows="7" placeholder="Message"></textarea>
+                                <textarea tabindex="3" class="input-xlarge" id="content" name="content" rows="7" placeholder="Message"></textarea>
                             </div>
                         </div>
 
                         <div class="actions">
-                            <button tabindex="3" type="submit" class="btn btn-inverse">Send message</button>
+                            <button tabindex="3" type="submit" class="btn btn-inverse">Send content</button>
                         </div>
                     </fieldset>
                 </form>
@@ -99,7 +100,7 @@
     <!--End Main Content-->
 
     <!--Footer-->
-    <th:block th:replace="/template/footer :: content"></th:block>
+    <th:block th:replace="/template/footer :: content"/>
     <!--End Footer-->
 </div>
 

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class AddressRestController {
 
     // get provinces
     @RequestMapping(value = "/provinces/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<ProvinceJSON>> listProvinces() {
+    public ResponseEntity<List<ProvinceJSON>> listProvinces(Principal principal) {
 
         List<Province> provinces = provinceService.findAll();
 

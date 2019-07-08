@@ -50,27 +50,30 @@ public class Account {
     private List<Ordered> orders;
 
     @OneToMany(targetEntity = Rating.class)
-    private List<Ordered> ratings;
+    private List<Rating> ratings;
+
+    @OneToMany(targetEntity = Toy.class)
+    private List<Toy> toys;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
     @JoinTable(
-            name = "account_toy",
+            name = "favorite_account_toy",
             joinColumns = { @JoinColumn(name = "account_id") },
             inverseJoinColumns = { @JoinColumn(name = "toy_id") }
     )
-    private List<Toy> toys = new ArrayList<>();
+    private List<Toy> favoriteToys = new ArrayList<>();
 
     public Account() {
     }
 
     public void addToy(Toy toy) {
-        toys.add(toy);
+        favoriteToys.add(toy);
     }
 
     public void removeToy(Long id) {
-        for (Toy toy : toys) {
+        for (Toy toy : favoriteToys) {
             if (toy.getId() == id) {
-                toys.remove(toy);
+                favoriteToys.remove(toy);
                 break;
             }
         }
@@ -78,7 +81,7 @@ public class Account {
 
     public boolean containToy(Long id) {
 
-        for (Toy toy : toys) {
+        for (Toy toy : favoriteToys) {
             if (toy.getId() == id) {
                 return true;
             }
@@ -207,11 +210,11 @@ public class Account {
         this.orders = orders;
     }
 
-    public List<Ordered> getRatings() {
+    public List<Rating> getRatings() {
         return ratings;
     }
 
-    public void setRatings(List<Ordered> ratings) {
+    public void setRatings(List<Rating> ratings) {
         this.ratings = ratings;
     }
 
@@ -223,4 +226,11 @@ public class Account {
         this.toys = toys;
     }
 
+    public List<Toy> getFavoriteToys() {
+        return favoriteToys;
+    }
+
+    public void setFavoriteToys(List<Toy> favoriteToys) {
+        this.favoriteToys = favoriteToys;
+    }
 }

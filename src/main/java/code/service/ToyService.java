@@ -12,6 +12,8 @@ public interface ToyService {
 
     List<Toy> findRelatedToys();
 
+    List<Toy> findBySellerId(Long id);
+
     Page<Toy> findBrandToys(Long id, Pageable pageable);
 
     Page<Toy> findCategoryToys(List<Long> idArr, Pageable pageable);
@@ -23,6 +25,8 @@ public interface ToyService {
     Toy findById(Long id);
 
     void save(Toy toy);
+
+    void remove(Long id);
 
     void updateQuantityInStock(Long id, Long qty);
 

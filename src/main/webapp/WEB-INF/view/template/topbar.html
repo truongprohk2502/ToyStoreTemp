@@ -6,6 +6,7 @@
 </head>
 <body>
 <th:block th:fragment="content">
+
     <div id="top-bar" class="container">
         <div class="row">
             <div class="span4">
@@ -16,10 +17,15 @@
             <div class="span8">
                 <div class="account pull-right">
                     <ul class="user-menu">
-                        <th:block sec:authorize="isAuthenticated()">
+                        <th:block sec:authorize="hasRole('USER')">
                             <li><a href="/order-history">Order History</a></li>
                             <li><a href="/favorite">Favorite List</a></li>
                             <li><a href="/cart" th:text="'My Cart(' + ${cart.quantity} + ')'"></a></li>
+                            <li><a href="/profile">My Account</a></li>
+                            <li><a href="/logout">Logout</a></li>
+                        </th:block>
+                        <th:block sec:authorize="hasRole('SELLER')">
+                            <li><a href="/manage-order">Order Manager</a></li>
                             <li><a href="/profile">My Account</a></li>
                             <li><a href="/logout">Logout</a></li>
                         </th:block>
@@ -32,6 +38,7 @@
             </div>
         </div>
     </div>
+
 </th:block>
 </body>
 </html>

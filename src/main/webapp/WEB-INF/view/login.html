@@ -41,8 +41,8 @@
                 <h2 class="title">Login Form</h2>
                 <form method="POST" action="/login" th:object="${account}">
                     <input type="hidden" th:field="*{id}"/>
-                    <div class="input-group" th:if="${message}">
-                        <span class="error-text" th:text="${message}"></span>
+                    <div class="input-group" th:if="${content}">
+                        <span class="error-text" th:text="${content}"></span>
                     </div>
                     <div class="input-group">
                         <input class="input--style-3" type="text" placeholder="Name" th:field="*{username}">

@@ -288,11 +288,4 @@ public class ToyController {
         return modelAndView;
     }
 
-    @GetMapping("/contact")
-    public ModelAndView contact() {
-
-        ModelAndView modelAndView = new ModelAndView("contact");
-
-        return modelAndView;
-    }
 }

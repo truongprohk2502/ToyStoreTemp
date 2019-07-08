@@ -36,15 +36,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         CharacterEncodingFilter filter = new CharacterEncodingFilter();
         filter.setEncoding("UTF-8");
         filter.setForceEncoding(true);
         http.addFilterBefore(filter, CsrfFilter.class);
 
         http.authorizeRequests()
-                .antMatchers( "/checkout").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/profile", "/comment", "/favorite", "/checkout").authenticated()
                 .antMatchers( "/order-history", "/ordered").hasRole("USER")
-                .antMatchers("/profile", "/comment", "/favorite").hasAnyRole("USER", "ADMIN", "SELLER")
+                .antMatchers("/manage-order").hasRole("SELLER")
                 .and()
                     .formLogin().loginPage("/login-form")
                     .defaultSuccessUrl("/home")
