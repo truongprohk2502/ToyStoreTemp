@@ -5,6 +5,7 @@ import code.model.Ordered;
 import code.model.Toy;
 import code.service.*;
 import code.session.OrderSession;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -90,7 +91,9 @@ public class OrderController {
         }
 
         int i = 0;
+
         Account account = accountService.findAccountByUsername(principal.getName());
+
         for (Ordered order : orderSession.getOrders()) {
             order.setAccount(account);
             order.setQuantity(Long.parseLong(cQty[i]));
@@ -141,4 +144,14 @@ public class OrderController {
 
         return modelAndView;
     }
+
+    @GetMapping("/manage-order")
+    public ModelAndView manager() {
+
+        ModelAndView modelAndView = new ModelAndView("manager");
+
+        return modelAndView;
+
+    }
+
 }

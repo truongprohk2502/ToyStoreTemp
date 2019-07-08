@@ -924,7 +924,7 @@ section.our_client .row{
 	color: red;
 }
 
-input[class="input-btn"] {
+.input-btn {
 	background-color: #4CAF50; /* Green */
 	color: white;
 	border: none;
@@ -940,11 +940,11 @@ input[class="input-btn"] {
 	cursor: pointer;
 }
 
-input[class="input-btn"]:hover {
+.input-btn:hover {
 	background-color: #1e7e34;
 }
 
-input[class="input-btn"]:disabled {
+.input-btn:disabled {
 	background-color: #a9dba9;
 	cursor: default;
 }
@@ -955,4 +955,16 @@ input[class="input-btn"]:disabled {
 	outline: none;
 	padding: 0;
 	margin-left: 10px;
+}
+
+.align-center {
+	text-align: center;
+}
+
+.a-text {
+	cursor: pointer;
+}
+
+.btn-inventory {
+    padding-bottom: 10px;
 }

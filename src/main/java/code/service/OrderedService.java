@@ -12,4 +12,8 @@ public interface OrderedService {
 
     List<Ordered> findAllByAccount_Username(String username);
 
+    List<Ordered> findAllByStatusAndAccountId(String status, Long id);
+
+    List<Ordered> findAllByStatusNotAndAccountId(String status, Long id);
+
 }

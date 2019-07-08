@@ -21,8 +21,6 @@ public class Toy {
 
     private Long quantityInStock;
 
-    private Boolean enableSelling;
-
     private Date manufacturingDate;
 
     private String description;
@@ -33,6 +31,8 @@ public class Toy {
 
     private Boolean onSale;
 
+    private String display;
+
     @ManyToOne
     @JoinColumn(name = "categoryId")
     private Category category;
@@ -40,6 +40,10 @@ public class Toy {
     @ManyToOne
     @JoinColumn(name = "brandId")
     private Brand brand;
+
+    @ManyToOne
+    @JoinColumn(name = "accountId")
+    private Account account;
 
     @OneToMany(targetEntity = Image.class)
     private List<Image> images;
@@ -50,8 +54,8 @@ public class Toy {
     @OneToMany(targetEntity = Rating.class)
     private List<Rating> ratings;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "toys")
-    private List<Account> accounts = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "favoriteToys")
+    private List<Account> favoriteAccounts = new ArrayList<>();
 
     @ManyToOne(targetEntity = Seller.class)
     @JoinColumn(name = "sellerId")
@@ -60,7 +64,7 @@ public class Toy {
     public Toy() {}
 
     public void addAccount(Account account) {
-        accounts.add(account);
+        favoriteAccounts.add(account);
     }
 
     public Long getId() {
@@ -103,14 +107,6 @@ public class Toy {
         this.quantityInStock = quantityInStock;
     }
 
-    public Boolean getEnableSelling() {
-        return enableSelling;
-    }
-
-    public void setEnableSelling(Boolean enableSelling) {
-        this.enableSelling = enableSelling;
-    }
-
     public Date getManufacturingDate() {
         return manufacturingDate;
     }
@@ -149,6 +145,14 @@ public class Toy {
 
     public void setOnSale(Boolean onSale) {
         this.onSale = onSale;
+    }
+
+    public String getDisplay() {
+        return display;
+    }
+
+    public void setDisplay(String display) {
+        this.display = display;
     }
 
     public Category getCategory() {
@@ -191,11 +195,19 @@ public class Toy {
         this.ratings = ratings;
     }
 
-    public List<Account> getAccounts() {
-        return accounts;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setAccounts(List<Account> accounts) {
-        this.accounts = accounts;
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public List<Account> getFavoriteAccounts() {
+        return favoriteAccounts;
+    }
+
+    public void setFavoriteAccounts(List<Account> favoriteAccounts) {
+        this.favoriteAccounts = favoriteAccounts;
     }
 }

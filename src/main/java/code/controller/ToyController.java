@@ -7,15 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.mail.internet.MimeMessage;
 import java.security.Principal;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,9 +39,6 @@ public class ToyController {
 
     @Autowired
     private OrderedService orderedService;
-
-    @Autowired
-    private JavaMailSender javaMailSender;
 
     private String str;
     private List<Long> cat;
@@ -295,30 +288,4 @@ public class ToyController {
         return modelAndView;
     }
 
-    @GetMapping("/contact")
-    public ModelAndView contact() {
-
-        ModelAndView modelAndView = new ModelAndView("contact");
-        modelAndView.addObject("feedbackEmail",new CustomerFeedbackEmail());
-        return modelAndView;
-    }
-
-    @PostMapping("/contact")
-    public ModelAndView responseEmail(@ModelAttribute(name = "feedbackEmail")CustomerFeedbackEmail customerFeedbackEmail){
-        ModelAndView modelAndView = new ModelAndView("contact");
-
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(CustomerFeedbackEmail.TARGET_EMAIL);
-        message.setFrom(CustomerFeedbackEmail.FROM_EMAIL);
-        message.setSubject(customerFeedbackEmail.SUBJECT_EMAIL);
-        message.setSentDate(new Date(System.currentTimeMillis()));
-        message.setText("Customer Email: " + customerFeedbackEmail.getEmail() + "\n"
-                + "Content: " + customerFeedbackEmail.getContent() + "\n"
-                + "Sending Date: " + message.getSentDate());
-        javaMailSender.send(message);
-
-        modelAndView.addObject("message","Send Successfully!!");
-
-        return modelAndView;
-    }
 }

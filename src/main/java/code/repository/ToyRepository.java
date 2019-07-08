@@ -13,29 +13,36 @@ import java.util.List;
 
 public interface ToyRepository extends PagingAndSortingRepository<Toy, Long> {
 
-    Page<Toy> findAllByBrand_NameContaining(String name, Pageable pageable);
+    List<Toy> findAllByAccount_IdAndDisplay(Long id, String display);
 
-    Page<Toy> findAllByCategory_IdIn(List<Long> names, Pageable pageable);
+    Page<Toy> findAllByBrand_NameContainingAndDisplay(String name, String display, Pageable pageable);
 
-    Page<Toy> findAllByNameContaining(String name, Pageable pageable);
+    Page<Toy> findAllByCategory_IdInAndDisplay(List<Long> names, String display, Pageable pageable);
 
-    Page<Toy> findAllByNameContainingAndOnSaleEquals(String name, Boolean onSale, Pageable pageable);
+    Page<Toy> findAllByNameContainingAndDisplay(String name, String display, Pageable pageable);
 
-    Page<Toy> findAllByNameContainingOrderByManufacturingDateDesc(String name, Pageable pageable);
+    Page<Toy> findAllByNameContainingAndDisplayAndOnSaleEquals(String name, String display, Boolean onSale, Pageable pageable);
 
-    Page<Toy> findAllByNameContainingOrderByPriceAsc(String name, Pageable pageable);
+    Page<Toy> findAllByNameContainingAndDisplayOrderByManufacturingDateDesc(String name, String display, Pageable pageable);
 
-    Page<Toy> findAllByNameContainingOrderByPriceDesc(String name, Pageable pageable);
+    Page<Toy> findAllByNameContainingAndDisplayOrderByPriceAsc(String name, String display, Pageable pageable);
 
-    Page<Toy> findAllByNameContainingAndPriceGreaterThanEqualAndPriceLessThanEqual(String word, Long price1, Long price2, Pageable pageable);
+    Page<Toy> findAllByNameContainingAndDisplayOrderByPriceDesc(String name, String display, Pageable pageable);
 
-    Page<Toy> findAllByNameContainingAndPriceGreaterThanEqual(String word, Long price1, Pageable pageable);
+    Page<Toy> findAllByNameContainingAndDisplayAndPriceGreaterThanEqualAndPriceLessThanEqual(String word, String display, Long price1, Long price2, Pageable pageable);
 
-    Page<Toy> findAllByNameContainingAndPriceLessThanEqual(String word, Long price2, Pageable pageable);
+    Page<Toy> findAllByNameContainingAndDisplayAndPriceGreaterThanEqual(String word, String display, Long price1, Pageable pageable);
+
+    Page<Toy> findAllByNameContainingAndDisplayAndPriceLessThanEqual(String word, String display, Long price2, Pageable pageable);
 
     @Modifying
     @Transactional
     @Query("update Toy t set t.quantityInStock = :qty where t.id = :id")
     void updateQuantityInStock(@Param("id") Long id, @Param("qty") Long qty);
+
+    @Modifying
+    @Transactional
+    @Query("update Toy t set t.display = 'DISABLE' where t.id = :id")
+    void deleteToy(@Param("id") Long id);
 
 }

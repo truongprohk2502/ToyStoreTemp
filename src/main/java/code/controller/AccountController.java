@@ -8,6 +8,8 @@ import code.service.AccountService;
 import code.validation.PasswordValidator;
 import code.validation.UpdateAccountValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,9 +40,17 @@ public class AccountController {
     @Autowired
     private PasswordValidator passwordValidator;
 
+    @Autowired
+    private JavaMailSender javaMailSender;
+
     @ModelAttribute("cart")
     public OrderSession orderSession() {
         return new OrderSession();
+    }
+
+    @ModelAttribute("login-account")
+    public Account loginAccount() {
+        return new Account();
     }
 
     @GetMapping("/login-form")
@@ -230,7 +241,12 @@ public class AccountController {
                     }
                 }
 
-                avgStar = 100 * temp / ratingSize;
+                if (ratingSize != 0) {
+                    avgStar = 100 * temp / ratingSize;
+                } else {
+                    avgStar = 0L;
+                }
+
                 if (avgStar <= 20) {
                     color = "danger";
                 } else if (avgStar > 20 && avgStar <= 40) {
@@ -269,7 +285,7 @@ public class AccountController {
 
         if (principal != null) {
             Account account = accountService.findAccountByUsername(principal.getName());
-            modelAndView.addObject("toys", account.getToys());
+            modelAndView.addObject("toys", account.getFavoriteToys());
         }
 
         return modelAndView;
@@ -291,10 +307,37 @@ public class AccountController {
             accountService.save(account);
 
             modelAndView.addObject("message", "Remove toys out of favorite list success!");
-            modelAndView.addObject("toys", account.getToys());
+            modelAndView.addObject("toys", account.getFavoriteToys());
 
         }
 
+
+        return modelAndView;
+    }
+
+    @GetMapping("/contact")
+    public ModelAndView contact() {
+
+        ModelAndView modelAndView = new ModelAndView("contact");
+        modelAndView.addObject("feedbackEmail",new CustomerFeedbackEmail());
+        return modelAndView;
+    }
+
+    @PostMapping("/contact")
+    public ModelAndView responseEmail(@ModelAttribute(name = "feedbackEmail") CustomerFeedbackEmail customerFeedbackEmail){
+        ModelAndView modelAndView = new ModelAndView("contact");
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(CustomerFeedbackEmail.TARGET_EMAIL);
+        message.setFrom(CustomerFeedbackEmail.FROM_EMAIL);
+        message.setSubject(customerFeedbackEmail.SUBJECT_EMAIL);
+        message.setSentDate(new Date(System.currentTimeMillis()));
+        message.setText("Customer Email: " + customerFeedbackEmail.getEmail() + "\n"
+                + "Content: " + customerFeedbackEmail.getContent() + "\n"
+                + "Sending Date: " + message.getSentDate());
+        javaMailSender.send(message);
+
+        modelAndView.addObject("message","Send Successfully!!");
 
         return modelAndView;
     }

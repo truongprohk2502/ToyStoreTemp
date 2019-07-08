@@ -3,6 +3,7 @@ package code.service;
 import code.model.Brand;
 import code.model.Toy;
 import code.repository.ToyRepository;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 
@@ -23,24 +24,29 @@ public class ToyServiceImpl implements ToyService {
 
     @Override
     public List<Toy> findRandomToys() {
-        return em.createNativeQuery("select * from Toy order by rand() limit 8", Toy.class).getResultList();
+        return em.createNativeQuery("select * from Toy where display = 'ENABLE' order by rand() limit 8", Toy.class).getResultList();
     }
 
     @Override
     public List<Toy> findRelatedToys() {
-        return em.createNativeQuery("select * from Toy order by rand() limit 6", Toy.class).getResultList();
+        return em.createNativeQuery("select * from Toy where display = 'ENABLE' order by rand() limit 6", Toy.class).getResultList();
+    }
+
+    @Override
+    public List<Toy> findBySellerId(Long id) {
+        return toyRepository.findAllByAccount_IdAndDisplay(id, "ENABLE");
     }
 
     @Override
     public Page<Toy> findBrandToys(Long id, Pageable pageable) {
         TypedQuery<Brand> query = em.createQuery("select b from Brand b where b.id = :id", Brand.class);
         query.setParameter("id", id);
-        return toyRepository.findAllByBrand_NameContaining(query.getSingleResult().getName(), pageable);
+        return toyRepository.findAllByBrand_NameContainingAndDisplay(query.getSingleResult().getName(), "ENABLE", pageable);
     }
 
     @Override
     public Page<Toy> findCategoryToys(List<Long> idArr, Pageable pageable) {
-        return toyRepository.findAllByCategory_IdIn(idArr, pageable);
+        return toyRepository.findAllByCategory_IdInAndDisplay(idArr, "ENABLE", pageable);
     }
 
     @Override
@@ -50,19 +56,19 @@ public class ToyServiceImpl implements ToyService {
 
         switch (sorted) {
             case "none":
-                toys = toyRepository.findAllByNameContaining(name, pageable);
+                toys = toyRepository.findAllByNameContainingAndDisplay(name, "ENABLE", pageable);
                 break;
             case "sale":
-                toys = toyRepository.findAllByNameContainingAndOnSaleEquals(name, true, pageable);
+                toys = toyRepository.findAllByNameContainingAndDisplayAndOnSaleEquals(name, "ENABLE", true, pageable);
                 break;
             case "new":
-                toys = toyRepository.findAllByNameContainingOrderByManufacturingDateDesc(name, pageable);
+                toys = toyRepository.findAllByNameContainingAndDisplayOrderByManufacturingDateDesc(name, "ENABLE", pageable);
                 break;
             case "high":
-                toys = toyRepository.findAllByNameContainingOrderByPriceDesc(name, pageable);
+                toys = toyRepository.findAllByNameContainingAndDisplayOrderByPriceDesc(name, "ENABLE", pageable);
                 break;
             case "low":
-                toys = toyRepository.findAllByNameContainingOrderByPriceAsc(name, pageable);
+                toys = toyRepository.findAllByNameContainingAndDisplayOrderByPriceAsc(name, "ENABLE", pageable);
                 break;
         }
 
@@ -73,15 +79,15 @@ public class ToyServiceImpl implements ToyService {
     public Page<Toy> findAllByPrice(String word, String price1, String price2, Pageable pageable) {
 
         if (!"".equals(price1) && !"".equals(price2)) {
-            return toyRepository.findAllByNameContainingAndPriceGreaterThanEqualAndPriceLessThanEqual(word, Long.parseLong(price1), Long.parseLong(price2), pageable);
+            return toyRepository.findAllByNameContainingAndDisplayAndPriceGreaterThanEqualAndPriceLessThanEqual(word, "ENABLE", Long.parseLong(price1), Long.parseLong(price2), pageable);
         }
 
         if (!"".equals(price1) && "".equals(price2)) {
-            return toyRepository.findAllByNameContainingAndPriceGreaterThanEqual(word, Long.parseLong(price1), pageable);
+            return toyRepository.findAllByNameContainingAndDisplayAndPriceGreaterThanEqual(word, "ENABLE", Long.parseLong(price1), pageable);
         }
 
         if ("".equals(price1) && !"".equals(price2)) {
-            return toyRepository.findAllByNameContainingAndPriceLessThanEqual(word, Long.parseLong(price2), pageable);
+            return toyRepository.findAllByNameContainingAndDisplayAndPriceLessThanEqual(word, "ENABLE", Long.parseLong(price2), pageable);
         }
 
         return null;
@@ -95,6 +101,11 @@ public class ToyServiceImpl implements ToyService {
     @Override
     public void save(Toy toy) {
         toyRepository.save(toy);
+    }
+
+    @Override
+    public void remove(Long id) {
+        toyRepository.deleteToy(id);
     }
 
     @Override
