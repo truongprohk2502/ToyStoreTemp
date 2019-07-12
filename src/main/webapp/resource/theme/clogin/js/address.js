@@ -157,9 +157,15 @@ function province() {
     }
 }
 
-function denySignUp() {
-    var checkbox = document.getElementsByName("sign-up");
-    checkbox.disabled = true;
+function denySignUpB() {
+    var button = document.getElementById('sign-up');
+    button.disabled = 'disabled';
+    button.style.backgroundColor = '#7f8c8d';
     alert("We can't associate with you since you don't have enough business certificate!")
-    return true;
+}
+
+function denySignUpA() {
+    var button = document.getElementById('sign-up');
+    button.removeAttribute('disabled');
+    button.removeAttribute('style');
 }

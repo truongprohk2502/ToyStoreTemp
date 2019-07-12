@@ -10,4 +10,8 @@ public interface BrandService {
 
     String findBrandName(Long id);
 
+    List<Brand> findAll();
+
+    Brand findBrandByName(String name);
+
 }

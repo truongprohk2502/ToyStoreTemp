@@ -22,7 +22,7 @@ function getInventory(page) {
             var strHtml = "";
 
             strHtml += '<div class="btn-inventory">';
-            strHtml += '<button class="input-btn">Create new product</button>';
+            strHtml += '<button class="input-btn" onclick="displayCreate()">Create new product</button>';
             strHtml += '</div>';
 
             strHtml += '<table>';
@@ -48,7 +48,7 @@ function getInventory(page) {
                     strHtml += '<td>' + data[i].quantityInStock + '</td>';
                     strHtml += '<td>' + data[i].price + '</td>';
                     strHtml += '<td>' + data[i].oldPrice + '</td>';
-                    strHtml += '<td class="align-center"><a class="a-text" onclick="updatToy(this)" id="' + data[i].id + '"><img width="20px" src="/resource/rating/images/edit.png" /></a></td>';
+                    strHtml += '<td class="align-center"><a class="a-text" onclick="displayUpdate(this)" id="' + data[i].id + '"><img width="20px" src="/resource/rating/images/edit.png" /></a></td>';
                     strHtml += '<td class="align-center"><a class="a-text" onclick="deleteToy(this)" id="' + data[i].id + '"><img width="20px" src="/resource/rating/images/remove.png" /></a></td>';
                     strHtml += '</tr>';
 
@@ -63,22 +63,22 @@ function getInventory(page) {
             strHtml += '<ul>';
 
             if (page != 0) {
-                strHtml += '<li><a class="a-text" onclick="getInventory(' + (page-1) + ')">Prev</a></li>';
+                strHtml += '<li><a class="a-text" onclick="getInventory(' + (page - 1) + ')">Prev</a></li>';
             }
 
             for (var i = 0; i < totalPages; i++) {
 
                 if (page == i) {
 
-                    strHtml += '<li class="active"><a class="a-text" onclick="getInventory(' + i + ')">' + (i+1) + '</a></li>';
+                    strHtml += '<li class="active"><a class="a-text" onclick="getInventory(' + i + ')">' + (i + 1) + '</a></li>';
                 } else {
 
-                    strHtml += '<li><a class="a-text" onclick="getInventory(' + i + ')">' + (i+1) + '</a></li>';
+                    strHtml += '<li><a class="a-text" onclick="getInventory(' + i + ')">' + (i + 1) + '</a></li>';
                 }
             }
 
             if (page != totalPages - 1) {
-                strHtml += '<li><a class="a-text" onclick="getInventory(' + (page+1) + ')">Next</a></li>';
+                strHtml += '<li><a class="a-text" onclick="getInventory(' + (page + 1) + ')">Next</a></li>';
             }
 
             strHtml += '</ul>';
@@ -137,22 +137,22 @@ function getHistoryOrders(page) {
             strHtml += '<ul>';
 
             if (page != 0) {
-                strHtml += '<li><a class="a-text" onclick="getHistoryOrders(' + (page-1) + ')">Prev</a></li>';
+                strHtml += '<li><a class="a-text" onclick="getHistoryOrders(' + (page - 1) + ')">Prev</a></li>';
             }
 
             for (var i = 0; i < totalPages; i++) {
 
                 if (page == i) {
 
-                    strHtml += '<li class="active"><a class="a-text" onclick="getHistoryOrders(' + i + ')">' + (i+1) + '</a></li>';
+                    strHtml += '<li class="active"><a class="a-text" onclick="getHistoryOrders(' + i + ')">' + (i + 1) + '</a></li>';
                 } else {
 
-                    strHtml += '<li><a class="a-text" onclick="getHistoryOrders(' + i + ')">' + (i+1) + '</a></li>';
+                    strHtml += '<li><a class="a-text" onclick="getHistoryOrders(' + i + ')">' + (i + 1) + '</a></li>';
                 }
             }
 
             if (page != totalPages - 1) {
-                strHtml += '<li><a class="a-text" onclick="getHistoryOrders(' + (page+1) + ')">Next</a></li>';
+                strHtml += '<li><a class="a-text" onclick="getHistoryOrders(' + (page + 1) + ')">Next</a></li>';
             }
 
             strHtml += '</ul>';
@@ -188,7 +188,7 @@ function getDelivering(page) {
             strHtml += '</tr>';
 
             var customerInfo = "";
-            var removeHtml= "";
+            var removeHtml = "";
 
             for (var i = page * rowsQty; i < (page + 1) * rowsQty; ++i) {
 
@@ -253,22 +253,22 @@ function getDelivering(page) {
             strHtml += '<ul>';
 
             if (page != 0) {
-                strHtml += '<li><a class="a-text" onclick="getDelivering(' + (page-1) + ')">Prev</a></li>';
+                strHtml += '<li><a class="a-text" onclick="getDelivering(' + (page - 1) + ')">Prev</a></li>';
             }
 
             for (var i = 0; i < totalPages; i++) {
 
                 if (page == i) {
 
-                    strHtml += '<li class="active"><a class="a-text" onclick="getDelivering(' + i + ')">' + (i+1) + '</a></li>';
+                    strHtml += '<li class="active"><a class="a-text" onclick="getDelivering(' + i + ')">' + (i + 1) + '</a></li>';
                 } else {
 
-                    strHtml += '<li><a class="a-text" onclick="getDelivering(' + i + ')">' + (i+1) + '</a></li>';
+                    strHtml += '<li><a class="a-text" onclick="getDelivering(' + i + ')">' + (i + 1) + '</a></li>';
                 }
             }
 
             if (page != totalPages - 1) {
-                strHtml += '<li><a class="a-text" onclick="getDelivering(' + (page+1) + ')">Next</a></li>';
+                strHtml += '<li><a class="a-text" onclick="getDelivering(' + (page + 1) + ')">Next</a></li>';
             }
 
             strHtml += '</ul>';
@@ -339,13 +339,13 @@ function cancelOrder(obj) {
         type: "post",
         url: "http://localhost:8080/remove/",
         datatype: 'json',
-        contentType : 'application/json; charset=utf-8',
+        contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(statusObj),
-        success: function(status){
+        success: function (status) {
             getDelivering(deliveringPage);
             getHistoryOrders(historyPage);
         },
-        error:function(error){
+        error: function (error) {
             alert("error " + error);
         }
     });
@@ -364,13 +364,13 @@ function deliveredOrder(obj) {
         type: "post",
         url: "http://localhost:8080/remove/",
         datatype: 'json',
-        contentType : 'application/json; charset=utf-8',
+        contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(statusObj),
-        success: function(status){
+        success: function (status) {
             getDelivering(deliveringPage);
             getHistoryOrders(historyPage);
         },
-        error:function(error){
+        error: function (error) {
             alert("error " + error);
         }
     });
@@ -385,14 +385,250 @@ function deleteToy(obj) {
 
         $.ajax({
             type: "delete",
-            url: "http://localhost:8080/toy/" + id,
-            success: function(status){
+            url: "http://localhost:8080/delete/toy/" + id,
+            success: function (status) {
                 getInventory(inventoryPage);
             },
-            error:function(error){
+            error: function (error) {
                 alert("error " + error);
             }
         });
     }
 
+}
+
+function displayUpdate(obj) {
+    var id = obj.getAttribute("id");
+
+    $.ajax({
+        type: "get",
+        url: "http://localhost:8080/toy/" + id,
+        success: function (data) {
+            var strHtml = "";
+            strHtml +=
+                '<div class="modal" id="updateModalChild" style="display: block">\n' +
+                '    <div class="modal-content">\n' +
+                '        <span class="modal-title">Toy Information</span>\n' +
+                '        <span class="close" onclick="closeUpdate(this)">&times;</span>\n' +
+                '        <form id="updateFormAJAX" method="post" action="/update-toy">\n' +
+                '            <input type="hidden" id="id" name="id" value="' + data.id + '">\n' +
+                '            <input type="hidden" id="brandId" name="brandId" value="' + data.brandId + '">\n' +
+                '            <input type="hidden" id="categoryId" name="categoryId" value="' + data.categoryId + '">\n' +
+                '            <input type="hidden" id="image" name="image" value="' + data.image + '">\n' +
+                '            <input type="hidden" id="manufacturingDate" name="manufacturingDate" value="' + data.manufacturingDate + '">\n' +
+                '            <input type="hidden" id="description" name="description" value="' + data.description + '">\n' +
+                '            <input type="hidden" id="information" name="information" value="' + data.information + '">\n' +
+                '            <table align="center">\n' +
+                '                <tr>\n' +
+                '                    <td><b>Name</b></td>\n' +
+                '                    <td><input type="text" id="name" name="name" value="' + data.name + '"> </td>\n' +
+                '                </tr>\n' +
+                '                <tr>\n' +
+                '                    <td><b>Manufacture</b></td>\n' +
+                '                    <td><input type="text" id="brandName" name="brandName" value="' + data.brandName + '"> </td>\n' +
+                '                </tr>\n' +
+                '                <tr>\n' +
+                '                    <td><b>Category</b></td>\n' +
+                '                    <td><input type="text" id="categoryName" name="categoryName" value="' + data.categoryName + '"> </td>\n' +
+                '                </tr>\n' +
+                '                <tr>\n' +
+                '                    <td><b>Quantity</b></td>\n' +
+                '                    <td><input type="text" id="quantityInStock" name="quantityInStock" value="' + data.quantityInStock + '"> </td>\n' +
+                '                </tr>\n' +
+                '                <tr>\n' +
+                '                    <td><b>Unit price</b></td>\n' +
+                '                    <td><input type="text" id="price" name="price" value="' + data.price + '"> </td>\n' +
+                '                </tr>\n' +
+                '                <tr>\n' +
+                '                    <td><b>Old Price</b></td>\n' +
+                '                    <td><input type="text" id="oldPrice" name="oldPrice" value="' + data.oldPrice + '"> </td>\n' +
+                '                </tr>\n' +
+                '            </table>\n' +
+                '            <button type="submit" class="btn btn--pill btn--green" onclick="updateToy(this)">Update</button>\n' +
+                '        </form>\n' +
+                '    </div>\n' +
+                '</div>';
+
+            $('#updateModal').html(strHtml);
+        }
+    })
+}
+
+function closeUpdate() {
+    document.getElementById("updateModalChild").style.display = 'none';
+
+}
+
+function updateToy() {
+    $('#updateFormAJAX').submit(function (event) {
+        event.preventDefault();
+    });
+    var toyJSon = new Object();
+    toyJSon.id = $('#id').val();
+    toyJSon.brandId = $('#brandId').val();
+    toyJSon.categoryId = $('#categoryId').val();
+    toyJSon.name = $('#name').val();
+    toyJSon.brandName = $('#brandName').val();
+    toyJSon.categoryName = $('#categoryName').val();
+    toyJSon.quantityInStock = $('#quantityInStock').val();
+    toyJSon.price = $('#price').val();
+    toyJSon.oldPrice = $('#oldPrice').val();
+    toyJSon.image = $('#image').val();
+    toyJSon.description = $('#description').val();
+    toyJSon.information = $('#information').val();
+    toyJSon.manufacturingDate = $('#manufacturingDate').val();
+    $.ajax({
+        type: 'post',
+        url: 'http://localhost:8080/update-toy',
+        datatype: 'json',
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify(toyJSon),
+        success: function () {
+            alert('success');
+            getInventory(inventoryPage);
+        },
+        error: function (error) {
+            alert("error " + error);
+        }
+    })
+}
+
+function displayCreate(data) {
+    $.ajax({
+        type: 'get',
+        url: 'http://localhost:8080/list-category',
+        success: function (categories) {
+            $.ajax({
+                type: 'get',
+                url: 'http://localhost:8080/list-brand',
+                success: function (brands) {
+                    var strHtml = '';
+                    strHtml +=
+                        '<div class="modal" id="createModalChild" style="display:block;">\n' +
+                        '    <div class="modal-content">\n' +
+                        '        <span class="modal-title">Toy Information</span>\n' +
+                        '        <span class="close" onclick="closeCreate()">&times;</span>\n' +
+                        '        <form id="createForm" method="post" action="/create-toy">\n' +
+                        '            <table>\n' +
+                        '                <tr>\n' +
+                        '                    <td><b>Name</b></td>\n' +
+                        '                    <td><input type="text" id="name" name="name" placeholder="Input toy\'s name"></td>\n' +
+                        '                </tr>\n' +
+                        '                <tr>\n' +
+                        '                    <td><b>Image</b></td>\n' +
+                        '                    <td><input type="text" id="image" name="image" placeholder="Input image\'s link"></td>\n' +
+                        '                </tr>\n' +
+                        '                <tr>\n' +
+                        '                    <td><b>Price</b></td>\n' +
+                        '                    <td><input type="number" id="price" name="price" placeholder="Input toy\'s price"> </td>\n' +
+                        '                </tr>\n' +
+                        '                <tr>\n' +
+                        '                    <td><b>Available Toys</b></td>\n' +
+                        '                    <td><input type="number" id="quantityInStock" name="quantityInStock" placeholder="Number of toys in your store"></td>\n' +
+                        '                </tr>\n' +
+                        '                <tr>\n' +
+                        '                    <td><b>Manufacturing Date</b></td>\n' +
+                        '                    <td>\n' +
+                        '                        <input id="manufacturingDate" name="manufacturingDate" class="js-datepicker" type="text">\n' +
+                        '                        <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>\n' +
+                        '                    </td>\n' +
+                        '                </tr>\n' +
+                        '                <tr>\n' +
+                        '                    <td><b>Description</b></td>\n' +
+                        '                    <td><input type="text" id="description" name="description" placeholder="type something"></td>\n' +
+                        '                </tr>\n' +
+                        '                <tr>\n' +
+                        '                    <td><b>Information</b></td>\n' +
+                        '                    <td><input type="text" id="information" name="information" placeholder="type something"></td>\n' +
+                        '                </tr>\n' +
+                        '                <tr>\n' +
+                        '                    <td><b>Old price</b></td>\n' +
+                        '                    <td><input type="number" id="oldPrice" name="oldPrice" placeholder="Input toy\'s old price"> </td>\n' +
+                        '                </tr>\n' +
+                        '                <tr>\n' +
+                        '                    <td><b>Is it on sale?</b></td>\n' +
+                        '                    <td>\n' +
+                        '                        <input type="radio" id="onSale" name="onSale" value="true">Yes\n' +
+                        '                        <input type="radio" id="onSale1" name="onSale" value="false">No\n' +
+                        '                    </td>\n' +
+                        '                </tr>';
+                    strHtml += '         <tr>\n' +
+                        '                    <td><b>Brand Name</b></td>\n' +
+                        '                    <td>\n' +
+                        '                        <select id="brandName" name="brandName">\n';
+                    for (var j = 0; j < brands.length; ++j) {
+                        strHtml += '<option value="' + brands[j].brandName + '">' + brands[j].brandName + '</option>'
+                    }
+                    strHtml += '                 </select>\n' +
+                        '                    </td>\n' +
+                        '               </tr>\n' +
+                        '               <tr>\n' +
+                        '                    <td></td>\n' +
+                        '                    <td>if your brand doesn\'t exist,<a href="#">create new one</a></td>\n' +
+                        '               </tr>';
+                    strHtml += '        <tr>\n' +
+                        '                    <td><b>Category Name</b></td>\n' +
+                        '                    <td>\n' +
+                        '                        <select id="categoryName" name="categoryName">\n';
+                    for (var i = 0; i < categories.length; ++i) {
+                        strHtml += '<option value="' + categories[i].name + '">' + categories[i].name + '</option>'
+                    }
+                    strHtml += '                 </select>\n' +
+                        '                    </td>\n' +
+                        '               </tr>\n' +
+                        '               <tr>\n' +
+                        '                    <td></td>\n' +
+                        '                    <td>if your category doesn\'t exist,<a href="#">create new one</a></td>\n' +
+                        '               </tr>\n' +
+                        '            </table>' +
+                        '            <button type="submit" class="btn btn--pill btn--green" onclick="createNewToy(this)">Add</button>\n' +
+                        '        </form>' +
+                        '    </div>' +
+                        '</div>';
+                    $('#createModal').html(strHtml);
+                }
+            })
+        }
+    })
+}
+
+function closeCreate() {
+    document.getElementById('createModalChild').style.display = 'none';
+}
+function createNewToy(){
+    $('#createForm').submit(function (event) {
+        event.preventDefault();
+    });
+    var toyJSON = new Object();
+    toyJSON.name = $('#name').val();
+    toyJSON.image = $('#image').val();
+    toyJSON.price = $('#price').val();
+    toyJSON.quantityInStock = $('#quantityInStock').val();
+    toyJSON.manufacturingDate = $('#manufacturingDate').val();
+    toyJSON.description = $('#description').val();
+    toyJSON.information = $('#information').val();
+    toyJSON.oldPrice = $('#oldPrice').val();
+    var check = $('#onSale').checked;
+    if (check){
+        toyJSON.onSale = check;
+    } else{
+        toyJSON.onSale = $('#onSale1').val();
+    }
+    toyJSON.brandName = $('#brandName').val();
+    toyJSON.categoryName = $('#categoryName').val();
+    $.ajax({
+        type: 'post',
+        url: 'http://localhost:8080/create-toy',
+        datatype: 'json',
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify(toyJSON),
+        success: function () {
+            alert('you have added successfully');
+            getInventory(inventoryPage);
+        },
+        error: function () {
+            alert('error');
+
+        }
+    })
 }

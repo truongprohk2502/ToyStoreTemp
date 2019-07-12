@@ -34,7 +34,9 @@ public class SellerController {
     @GetMapping("/register-selling")
     public ModelAndView registerSellingForm(){
         ModelAndView modelAndView = new ModelAndView("register-selling");
-        modelAndView.addObject("seller",new Seller());
+        Seller seller = new Seller();
+        seller.setBusinessCertificate(true);
+        modelAndView.addObject("seller",seller);
         modelAndView.addObject("businessFields",businessFieldService.findAll());
         return modelAndView;
     }

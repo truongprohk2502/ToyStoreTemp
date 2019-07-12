@@ -23,6 +23,8 @@
     <!--Table-->
     <link th:href="@{/resource/table/style.css}" rel="stylesheet"/>
 
+    <link th:href="@{/resource/clogin/vendor/datepicker/daterangepicker.css}" rel="stylesheet" media="all">
+
     <!-- scripts -->
     <script th:src="@{/resource/themes/js/jquery-1.7.2.min.js}"></script>
     <script th:src="@{/resource/bootstrap/js/bootstrap.min.js}"></script>
@@ -97,8 +99,19 @@
 
 </div>
 
+<div id="updateModal">
+
+</div>
+
+<div id="createModal">
+
+</div>
 <script th:src="@{/resource/sales/sales.js}"></script>
 <script th:src="@{/resource/themes/js/common.js}"></script>
+
+<script th:src="@{/resource/clogin/vendor/select2/select2.min.js}"></script>
+<script th:src="@{/resource/clogin/vendor/datepicker/moment.min.js}"></script>
+<script th:src="@{/resource/clogin/vendor/datepicker/daterangepicker.js}"></script>
 <script>
     $(function () {
         $('#myTab a:first').tab('show');

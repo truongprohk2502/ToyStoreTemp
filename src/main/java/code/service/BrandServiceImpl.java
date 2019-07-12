@@ -29,4 +29,14 @@ public class BrandServiceImpl implements BrandService {
         return brandRepository.findOne(id).getName();
     }
 
+    @Override
+    public List<Brand> findAll() {
+        return brandRepository.findAll();
+    }
+
+    @Override
+    public Brand findBrandByName(String name) {
+        return brandRepository.findFirstByName(name);
+    }
+
 }

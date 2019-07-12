@@ -40,4 +40,9 @@ public class CategoryServiceImpl implements CategoryService {
         return em.createNativeQuery(query, Category.class).getResultList();
     }
 
+    @Override
+    public Category findCategoryByName(String name) {
+        return categoryRepository.findFirstByName(name);
+    }
+
 }

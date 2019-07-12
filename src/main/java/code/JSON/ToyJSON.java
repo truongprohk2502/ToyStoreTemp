@@ -28,6 +28,8 @@ public class ToyJSON {
 
     private String categoryName;
 
+    private boolean onSale;
+
     public ToyJSON() {
     }
 
@@ -133,5 +135,13 @@ public class ToyJSON {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public boolean isOnSale() {
+        return onSale;
+    }
+
+    public void setOnSale(boolean onSale) {
+        this.onSale = onSale;
     }
 }

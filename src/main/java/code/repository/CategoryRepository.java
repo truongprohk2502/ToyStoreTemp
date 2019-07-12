@@ -9,4 +9,6 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     List<Category> findAllByParentIdContaining(String parentId);
 
+    Category findFirstByName(String name);
+
 }

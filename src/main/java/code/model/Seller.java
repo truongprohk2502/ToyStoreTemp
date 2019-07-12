@@ -25,9 +25,6 @@ public class Seller {
     private Account account;
 
     @OneToMany
-    private List<Toy> toys;
-
-    @OneToMany
     private List<Ordered> orderedList;
 
     public Long getId() {
@@ -76,14 +73,6 @@ public class Seller {
 
     public void setAccount(Account account) {
         this.account = account;
-    }
-
-    public List<Toy> getToys() {
-        return toys;
-    }
-
-    public void setToys(List<Toy> toys) {
-        this.toys = toys;
     }
 
     public List<Ordered> getOrderedList() {

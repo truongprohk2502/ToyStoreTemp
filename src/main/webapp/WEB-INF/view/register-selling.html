@@ -157,10 +157,16 @@
 
                     <div class="input-group">
                         <span class="input--style-3">Doanh nghiệp của bạn đã có giấy phép kinh doanh chưa?</span>
-                        <input class="radio-inline" type="radio" th:field="*{businessCertificate}" th:value="true" checked>
-                        <span class="input--style-3">Đã có</span>
-                        <input class="radio-inline" type="radio" th:field="*{businessCertificate}" th:value="false" onselect="denySignUp()">
-                        <span class="input--style-3">Chưa có</span>
+                        <div class="input--style-3">
+                            <input type="radio" th:field="*{businessCertificate}" th:value="true" onchange="denySignUpA()"/>
+                            <span>Đã Có</span>
+                        </div>
+                        <div class="input--style-3">
+                            <input type="radio" th:field="*{businessCertificate}" th:value="false" onchange="denySignUpB()"/>
+                            <span>Chưa có</span>
+                        </div>
+
+
                     </div>
 
                     <div class="input-group">
@@ -168,13 +174,12 @@
                     </div>
 
                     <div class="input-group">
-                        <div>
+                        <div class="rs-select2 js-select-simple select--no-search">
                             <select th:field="*{businessField}">
                                 <option value="null">Ngành hàng</option>
-                                <th:block th:each="field : ${businessFields}">
-                                    <option th:value="${field.name}" th:text="${field.name}"></option>
-                                </th:block>
+                                <option th:each="field : ${businessFields}" th:value="${field.id}" th:text="${field.name}"></option>
                             </select>
+                            <div class="select-dropdown"></div>
                         </div>
                     </div>
 
@@ -182,7 +187,7 @@
                         <span><a href="/login-form">Have already an account?</a></span>
                     </div>
                     <div class="p-t-10">
-                        <button class="btn btn--pill btn--green" type="submit" name="sign-up">Sign up</button>
+                        <button class="btn btn--pill btn--green" type="submit" id="sign-up">Sign up</button>
                     </div>
 
 
